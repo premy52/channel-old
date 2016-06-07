@@ -1,4 +1,7 @@
 class Dc < ActiveRecord::Base
+	
+	extend FriendlyId
+	friendly_id :dc_name, use: :slugged
 
 	validates :dc_name, presence: true, uniqueness: {scope: :distributor, message: "already exists for this distributor"}
 	
@@ -8,7 +11,7 @@ class Dc < ActiveRecord::Base
 	has_many :dc_slots, dependent: :destroy
 	has_many :slotted_fgskus, through: :dc_slots, source: :fgsku
 
-	before_validation :generate_slug
+#	before_validation :generate_slug
 
 #to refactor; also in authorization.rb
 	def available_fgskus
@@ -20,8 +23,8 @@ class Dc < ActiveRecord::Base
 		slug
 	end
 
-	def generate_slug
-		self.slug ||= dc_name.parameterize if dc_name
-	end
+	# def generate_slug
+	# 	self.slug ||= dc_name.parameterize if dc_name
+	# end
 
 end

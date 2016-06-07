@@ -57,10 +57,19 @@ private
 					)
 	end
 
-	def set_banner
-		parameter = :banner_id || :id
-		@banner = Banner.find_by!(slug: params[parameter])
-	end
+		def set_banner
+		if @banner
+			@banner = Banner.find_by!(slug: params[:id])
+		elsif params[:banner_id].present?
+			@banner = Banner.find_by!(slug: params[:banner_id])
+		else
+			@banner = Banner.find_by!(slug: params[:id])
+		end
+
+	# def set_banner
+	# 	parameter = :banner_id || :id
+	# 	@banner = Banner.find_by!(slug: params[parameter])
+	# end
 	def set_parent
 		if @banner
 			@parent = @banner.parent

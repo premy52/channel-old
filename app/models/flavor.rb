@@ -1,5 +1,8 @@
 class Flavor < ActiveRecord::Base
 
+	extend FriendlyId
+	friendly_id :shorthand, use: :slugged
+
 # RANK based on UNFI Ridgefield cases 1/1/16 - 5/30/16
 RANK = { 	"CC" 		=> 1,   # 45 cs
 					"CPB" 	=> 2,   # 36 cs
@@ -20,15 +23,15 @@ RANK = { 	"CC" 		=> 1,   # 45 cs
 	has_many :fgskus, dependent: :destroy
 	has_many :recipes, dependent: :destroy	
 
-	before_validation :generate_slug
+#	before_validation :generate_slug
 
 	def to_param
 		slug
 	end
 	
-	def generate_slug
-		self.slug ||= shorthand.parameterize if shorthand
-	end
+	# def generate_slug
+	# 	self.slug ||= shorthand.parameterize if shorthand
+	# end
 
 	def self.ranked_flavors
 		Flavor.order(:rank)

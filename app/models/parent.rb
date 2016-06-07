@@ -1,4 +1,8 @@
 class Parent < ActiveRecord::Base
+	
+	extend FriendlyId
+	friendly_id :corpname, use: :slugged
+
 	CHANNELS = [ 
 		'Natural Grocery',
 		'Conventional Grocery',
@@ -22,7 +26,7 @@ class Parent < ActiveRecord::Base
 
 	has_many :banners, dependent: :destroy
 
-	before_validation :generate_slug
+#	before_validation :generate_slug
 
 	def empty?
 		corpname == nil 
@@ -40,8 +44,8 @@ class Parent < ActiveRecord::Base
 		slug
 	end
 
-	def generate_slug
-		self.slug ||= corpname.parameterize if corpname
-	end
+	# def generate_slug
+	# 	self.slug ||= corpname.parameterize if corpname
+	# end
 
 end

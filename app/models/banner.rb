@@ -1,6 +1,6 @@
 class Banner < ActiveRecord::Base
-	#extend FriendlyId
-	#friendly_id :banner_name, use: :slugged
+	extend FriendlyId
+	friendly_id :banner_name, use: :slugged
 
 	validates :banner_name, presence: true, uniqueness: {scope: :parent, message: "already exists for this parent company"}
 	validates :country, presence: true
@@ -21,7 +21,7 @@ class Banner < ActiveRecord::Base
 	has_many :authorized_fgskus, through: :authorizations, source: :fgsku
 #	has_many :fgskus, through: :authorizations
 
-	before_validation :generate_slug
+	# before_validation :generate_slug
   before_validation :initialize_banner_store_count
 
 	def to_param
@@ -83,9 +83,9 @@ class Banner < ActiveRecord::Base
 		slug
 	end
 
-	def generate_slug
-		self.slug = banner_name.parameterize if banner_name
-	end
+	# def generate_slug
+	# 	self.slug = banner_name.parameterize if banner_name
+	# end
 
  def initialize_banner_store_count
   	self.banner_store_count = 0 unless banner_store_count

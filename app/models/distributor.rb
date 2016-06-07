@@ -1,5 +1,8 @@
 class Distributor < ActiveRecord::Base
 
+	extend FriendlyId
+	friendly_id :distributor_name, use: :slugged
+
 	CHANNELS = [ 
 		'Natural Grocery',
 		'Conventional Grocery',
@@ -16,7 +19,7 @@ class Distributor < ActiveRecord::Base
 	
 	has_many :dcs, dependent: :destroy
 
-	before_validation :generate_slug	
+#	before_validation :generate_slug	
 
 	def dc_count
 		self.dcs.count
@@ -26,8 +29,8 @@ class Distributor < ActiveRecord::Base
 		slug
 	end
 
-	def generate_slug
-		self.slug ||= distributor_name.parameterize if distributor_name
-	end
+	# def generate_slug
+	# 	self.slug ||= distributor_name.parameterize if distributor_name
+	# end
 
 end
