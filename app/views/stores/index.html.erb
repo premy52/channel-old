@@ -1,0 +1,21 @@
+<header>
+	<h1><%= pluralize(@banner.stores.size, 'Store') %> </h1> 
+	for <%= link_to(@banner.parent.corpname, @banner.parent) %> 
+	<%= link_to(@banner.banner_name, parent_banner_path(@banner.parent, @banner)) %> 
+</header>
+
+<% storecume = 0 %>
+
+<ol>
+	<% @banner.stores.order("store_name").each do |store| %>
+
+	<article class="parent">
+			<li>
+				<strong>
+					<%= link_to(store.store_name, parent_banner_store_path(@banner.parent,@banner,store)) %>
+				</strong>
+			</li>
+	</article>
+
+	<% end %>
+</ol>

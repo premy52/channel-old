@@ -1,0 +1,22 @@
+<article id="parent" class="parent">
+	<header>
+		<%= link_to(@store.banner.parent.corpname, parent_path(@store.banner.parent)) %><br/>
+		<%= link_to(@store.banner.banner_name, parent_banner_path(@store.banner.parent, @store.banner)) %><br/>
+		<i>Store:</i> 
+		<h1><%= @store.store_name %></h1>
+	</header>
+		Distributor DC: <%= link_to(@store.dc.distributor.distributor_name, distributor_path(@store.dc.distributor )) %> 
+		<%= link_to(@store.dc.dc_name, distributor_dc_path(@store.dc.distributor, @store.dc)) %>
+		
+  <footer>
+		<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this Store', edit_parent_banner_store_path(@banner.parent, @banner, @store), class: 'button'  %>
+				<%= link_to 'Delete this Store', parent_banner_store_path(@banner.parent, @banner, @store), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@store.store_name}?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>

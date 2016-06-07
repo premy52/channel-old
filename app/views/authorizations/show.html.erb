@@ -1,0 +1,19 @@
+<article id="parent" class="parent">
+	<header>
+		<%= link_to(@authorization.banner.parent.corpname, parent_path(@authorization.banner.parent)) %><br/>
+		<%= link_to(@authorization.banner.banner_name, parent_banner_path(@authorization.banner.parent, @authorization.banner)) %>
+
+		<br/>
+		<i>authorization:</i> 
+		<h1><%= @authorization.fgsku.flavor.shorthand %></h1>
+	</header>
+		
+  <footer>
+		<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this authorization', edit_parent_banner_authorization_path(@banner.parent, @banner, @authorization), class: 'button'  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>

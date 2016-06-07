@@ -1,0 +1,47 @@
+<% content_for(:title, @parent.corpname) %>
+<article id="parent" class="parent">
+	<header>
+	<%= image_for(@parent) %>
+		<h1><%= @parent.corpname %></h1>
+	</header>
+
+		<% if	@parent.noreviewdate %>
+			<p><b><i>NO REVIEW DATE KNOWN</i></b></p>
+		<% else %>
+			<p> Next Review: <%= @parent.nextreviewdate %> </p>
+		<% end %>
+		<p> HQ Broker: <%= @parent.ourbrokerfirstname %> <%= @parent.ourbrokerlastname %></p>
+		<p> <%= pluralize(@parent.store_count, 'store') %></p>
+		<p> <%= @parent.channel_segment %></p>
+		<p> <%= @parent.buyerfirstname %> <%= @parent.buyerlastname %>, HQ buyer</p>
+		<p> <%= @parent.hqcity %>, <%= @parent.hqstate %> </p>
+		<p> Corporate Level Notes:<br/> <%= @parent.corp_notes %> </p>
+
+  <footer>
+		<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this Organization', edit_parent_path(@parent), class: 'button'  %>
+				<%= link_to 'Delete this Organization', parent_path(@parent), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@parent.corpname}?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>
+
+<% content_for(:side)	do %>	
+	<p><%= pluralize(@parent.banners.size, 'Banner') %>:</p>
+	<ol>
+		<% @parent.banners.order("banner_name").each do |banner| %>
+		<article class="parent">			
+				<li>
+					<strong>
+						<%= link_to(banner.banner_name, parent_banner_path(@parent,banner)) %> 
+					</strong>
+				</li>
+		<% end %>
+	</ol>
+	<%= link_to "Add a Retail Banner", new_parent_banner_path(@parent),
+	  								class: "button ok addbanner" %>
+<% end %>

@@ -1,0 +1,34 @@
+<%= form_for(@flavor) do |f| %>
+  <%= render 'shared/errors', object: @flavor %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label :shorthand %> <%= f.text_field :shorthand, size: 4, autofocus: true %></Li>
+		<li class="required"><%= f.label :descriptor %> <%= f.text_field :descriptor, size: 30 %></Li>
+		<li class="required"><%= f.label :rank %> <%= f.number_field :rank,:class => 'text_field', :step => 1 %></Li>
+
+		<li class="required"><%= f.label :coated %>
+			<% [true,false].each do |coatedchoice| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :coated, coatedchoice %></td>
+						<td>
+							<% if @flavor.coated == coatedchoice %>
+								<strong><font color="red"> <%= coatedchoice %> </strong></font>
+							<% else %>
+								<%= coatedchoice %> 
+							<% end %>
+						</td>
+					</tr>
+				</table>			
+			<% end %>
+		</Li>
+
+
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', flavors_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+
+<% end %>

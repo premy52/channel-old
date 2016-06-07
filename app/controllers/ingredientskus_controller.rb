@@ -1,0 +1,2 @@
+class IngredientskusController < ApplicationController
+end

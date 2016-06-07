@@ -1,0 +1,21 @@
+<article id="parent" class="parent">
+	<header>
+		<h1><%= @flavor.shorthand %></h1>
+		<%= @flavor.descriptor %>
+	</header>
+
+  <footer>
+  	<%= link_to "List SKUs", flavor_fgskus_path(@flavor), class: "button ok" %>
+		<% if current_user_admin? %>
+	  	<%= link_to "Add an FG SKU", new_flavor_fgsku_path(@flavor),
+	  								class: "button ok addfgsku" %>
+	    <nav>
+				<%= link_to 'Edit this Flavor', edit_flavor_path(@flavor), class: 'button'  %>
+				<%= link_to 'Delete this Flavor', flavor_path(@flavor), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@flavor.descriptor}?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>

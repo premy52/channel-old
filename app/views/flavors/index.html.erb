@@ -1,0 +1,34 @@
+<header>
+	<h1><%= pluralize(@flavors.size, 'Flavor')%> </h1>
+	<%= pluralize(Fgsku.all.size, 'SKU') %>:
+</header>
+
+<ul>
+	<% Fgsku::COUNTRIES.each do |country| %>
+		<li><%= pluralize(Fgsku.where(country: country).size, "#{country} SKU") %></li>
+		<ul>
+			<% Fgsku::SIZEGROUPS.each do |sizegroup| %>
+				<li><%= pluralize(Fgsku.where("sizegroup = ? AND country = ?", sizegroup, country).size, "#{sizegroup} SKU") %></li>
+			<% end%>
+		</ul>
+	<% end %>
+
+</ul>
+
+<ol>
+	<% @flavors.order("shorthand").each do |flavor| %>
+		<article class="flavor">
+			<li>
+			<strong>
+				Rank: <%= flavor.rank %> 
+				<%= link_to(flavor.shorthand, flavor) %>
+			</strong> <%= flavor.descriptor %>: 
+				<% hook = pluralize(Fgsku.where(flavor: flavor).size, 'SKU') %>
+			<%= link_to(hook, flavor_fgskus_path(flavor)) %>
+			</li>
+	<% end %>
+
+
+
+	</article>
+</ol>

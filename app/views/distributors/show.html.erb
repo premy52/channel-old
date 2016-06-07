@@ -1,0 +1,62 @@
+<% content_for(:title, @distributor.distributor_name) %>
+<article id="parent" class="parent">
+	<header>
+		<h1><%= @distributor.distributor_name %></h1>
+	</header>
+		<p> <%= @distributor.channel_segment %></p>
+	
+		<p> <%= @distributor.distributor_contact_first_name %> <%= @distributor.distributor_contact_last_name %></p>
+		<p> <%= @distributor.distributor_city %>, <%= @distributor.distributor_state %> </p>
+		<p> Distributor Level Notes:<br/> <%= @distributor.distributor_notes %> </p>
+
+  <footer>
+		<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this Distributor', edit_distributor_path(@distributor), class: 'button'  %>
+				<%= link_to 'Delete this Distributor', distributor_path(@distributor), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@distributor.distributor_name}?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+</article>
+
+<% content_for(:side) do %>
+	<h3><%= pluralize(@distributor.dcs.size, 'DC') %></h3>
+	<table>
+	<tr>
+		<th></th>
+		<th>Default</th>
+		<th>Served</th>
+	</tr>
+	<tr>
+		<th>DC</th>
+		<th>Banners</th>
+		<th>Stores</th>
+	</tr>
+		<% cumestores = 0 %>
+		<% cumebanners = 0 %>
+			<% @distributor.dcs.order("dc_name").each do |dc| %>
+				<article class="parent">
+				<tr>
+					<td align="right"><strong><%= link_to(dc.dc_name, distributor_dc_path(@distributor,dc)) %></strong></td>
+					<% bannercount = Banner.where(dc_id: dc).size %>
+					<td align="center"><%= bannercount %></td>
+					<% cumebanners += bannercount %>
+					<% storecount = Store.where(dc_id: dc).size %>
+					<td align="center"><%= storecount %></td>
+					<% cumestores += storecount %>
+				</tr>
+			<% end %>
+			
+			<tr>
+				<th align="right">Total:</th>
+				<th align="center"><%= cumebanners %></th>
+				<th align="center"><%= cumestores %></th>
+			</tr>
+		</table>
+			
+<% if current_user_admin? %>
+		<%= link_to "Add a DC", new_distributor_dc_path(@distributor), class: "button ok addbanner" %>
+	<% end %>
+<% end %>	

@@ -1,0 +1,104 @@
+<% content_for(:title, @banner.banner_name) %>
+<article id="parent" class="parent">
+	<header>
+		Parent: <%= image_for(@banner) %>
+		<% parent = @banner.parent %>
+		<%= link_to(parent.corpname, parent_path(parent)) %> 
+		<h1>Banner: <%= @banner.banner_name %></h1>
+	</header>
+	Priority: <%= @banner.priority %><br>
+
+	Default DC: <%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc)) %><br>
+
+	<h2><%= pluralize(@banner.banner_promos.size, 'Promo') %>:</h2>
+		<ol>
+		<% @banner.banner_promos.order("start_date").each do |promo| %>
+		<article class="parent">
+			<header>
+				<li>
+					<strong><%= link_to(promo.comment, parent_banner_banner_promo_path(@banner.parent, @banner, promo )) %> </strong>
+					 <%= promo.start_date %> to <%= promo.end_date %> 
+					 <%= promo.promo_vehicle %> <%= promo.promo_level %> <%= promo.promo_method %> <%= promo.status %> 
+				</li>
+			<% end %>
+		</ol>
+ 	<%= link_to "Add a Promo", new_parent_banner_banner_promo_path(@parent,@banner),
+  								class: "button ok addbanner" %>
+
+	<h2><%= pluralize(@banner.stores.size, 'Store') %>:</h2>
+		<ol>
+		<% @banner.stores.order("store_name").each do |store| %>
+		<article class="parent">
+			<header>
+				<li>
+					<strong>
+						<%= link_to(store.store_name, parent_banner_store_path(@banner.parent, @banner, store )) %> 
+					</strong> 
+						<%= store.city %>, <%= store.state %> :: 
+						<i><%= store.dc.distributor.distributor_name %> <%= link_to(store.dc.dc_name, distributor_dc_path(store.dc.distributor, store.dc)) %></i>
+				</li>
+			<% end %>
+		</ol>
+  	<%= link_to "Add a Store", new_parent_banner_store_path(@parent,@banner),
+  								class: "button ok addbanner" %>
+
+		<p> Broker: <%= @banner.banner_broker_first_name %> <%= @banner.banner_broker_last_name %> </p>
+		<p> Total of <%= pluralize(@banner.banner_store_count, 'store') %></p>
+		<p> <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %>, buyer</p>
+		<p> <%= @banner.banner_city %>, <%= @banner.banner_state %> </p>
+		<p>Banner Level Notes:<br/> <%= @banner.banner_notes %> </p>
+ 
+  <footer>
+  	<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this Banner', edit_parent_banner_path(@parent,@banner), class: 'button'  %>
+				<%= link_to 'Delete this Banner', parent_banner_path(@banner.parent, @banner), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@banner.banner_name}?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>
+
+<% content_for(:side)	do %>
+	<h3><%= pluralize(@banner.total_authorizations, 'FG SKU Authorization') %></h3>
+		<article class="parent">
+			<table>
+				<th>SKU</th>
+				<th>BSSW</th>
+				<% cume_bssw = 0 %>
+
+				<% @banner.authorized_fgskus.includes(:flavor).order('sizegroup', "flavors.shorthand").each do |fgsku| %>
+					<tr>
+						<td> <%= link_to(
+							 "#{fgsku.flavor.shorthand} 
+							 #{fgsku.country} 
+							 #{fgsku.sizegroup}", flavor_fgsku_path(fgsku.flavor, fgsku)) %>
+						</td>
+						<td align="right">
+							<% authorization = @banner.authorizations.find_by(fgsku: fgsku) %>
+							<% authorization.bssw = 0 if authorization.bssw == nil %>
+								<%= link_to(authorization.bssw.round(1), edit_parent_banner_authorization_path(@banner.parent, @banner, authorization)) %>
+						</td>
+					</tr>
+				<% end %>
+
+				<tr align="right">
+					<td>Total BSW </td>
+					<td><strong><%= @banner.cume_bssw.round(1) %></strong></td>
+				</tr>
+				<tr align="right">
+					<td>x<%= pluralize(@banner.banner_store_count,"str") %>=Total Bars/Wk</td>
+					<td><strong><%= @banner.barsperweek %></strong></td>
+				</tr>
+				<tr align="right">
+					<td>Average BSSW </td>
+					<td><strong><%= @banner.average_bssw.round(1) %></strong></td>
+				</tr>
+		</table>
+
+	<nav>
+	 	<%= link_to "Change SKU Authorizations", edit_parent_banner_path(@parent,@banner), class: "button" %>
+	</nav>
+<% end %>

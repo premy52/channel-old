@@ -1,0 +1,23 @@
+<%= form_for([@banner.parent, @banner, @authorization]) do |f| %>
+  <%= render 'shared/errors', object: @authorization %>
+	<fieldset>
+		<ol>
+
+		<li class="required"><%= f.label :bssw %> <%= f.number_field :bssw, :class => 'text_field', :step => 0.01, autofocus: true %></Li>
+
+		<li class="required"><%= f.label "authorization date" %> <%= f.date_field :authdate %></Li>
+		<li class="required"><%= f.label "drop date" %> <%= f.date_field :dropdate %></Li>
+
+		<p>
+			<%= f.submit %>
+			<% if @authorization.id %>
+				<%= link_to 'CANCEL', parent_banner_authorization_path, class: 'button'%>
+			<% else %>
+				<%= link_to 'CANCEL', parent_banner_authorizations_path, class: 'button'%>
+			<% end %>
+		</p> 
+
+		</ol>
+	</fieldset>
+
+<% end %>

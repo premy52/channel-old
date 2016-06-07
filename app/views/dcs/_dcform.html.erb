@@ -1,0 +1,70 @@
+<%= form_for([@distributor, @dc]) do |f| %>
+  <%= render 'shared/errors', object: @dc %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label :dc_name %> <%= f.text_field :dc_name, size: 65, autofocus: true %></li>
+		</li>
+		
+		<li class="required"><%= f.label :country %>
+			<% Fgsku::COUNTRIES.each do |country| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :country, country %></td>
+						<td><%= country %></td>
+					</tr>
+				</table>			
+			<% end %>
+		</li>
+
+		<li>
+			<strong><%= f.label 'Slotted SKUs:' %></strong>
+			<%= f.collection_check_boxes(:slotted_fgsku_ids, @dc.available_fgskus, :id, :flavor_descriptor) %>
+		</li>
+
+		<li class="required">
+			<%= f.label :dc_contact_first_name %> 
+			<%= f.text_field :dc_contact_first_name %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_contact_last_name %> 
+			<%= f.text_field :dc_contact_last_name %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_contact_email %> 
+			<%= f.text_field :dc_contact_email %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_contact_phone %> 
+			<%= f.text_field :dc_contact_phone %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_address_1 %> 
+			<%= f.text_field :dc_address_1 %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_address_2 %> 
+			<%= f.text_field :dc_address_2 %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_city %> 
+			<%= f.text_field :dc_city %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_state %> 
+			<%= f.text_field :dc_state %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_zip %> 
+			<%= f.text_field :dc_zip %>
+		</li>
+		<li class="required">
+			<%= f.label :dc_notes %> 
+			<%= f.text_area :dc_notes, cols: 40, rows: 7  %>
+		</li>
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', distributor_dcs_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+<% end %>

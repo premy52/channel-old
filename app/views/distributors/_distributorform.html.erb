@@ -1,0 +1,75 @@
+<%= form_for(@distributor) do |f| %>
+  <%= render 'shared/errors', object: @distributor %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label "Distributor:" %> <%= f.text_field :distributor_name, size: 65, autofocus: true %></Li>
+		<li class="required"><%= f.label :channel_segment %>
+			<% Distributor::CHANNELS.each do |channel| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :channel_segment, channel %></td>
+						<td><%= channel %></td>
+					</tr>
+				</table>
+				<% end %>
+
+				</li>
+				<li class="required"><%= f.label :country %>
+					<% Fgsku::COUNTRIES.each do |country| %>
+						<table>
+							<tr>
+								<td><%= f.radio_button :country, country %></td>
+								<td><%= country %></td>
+							</tr>
+						</table>			
+					<% end %>
+				</li>	
+			
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_contact_first_name %> 
+			<%= f.text_field :distributor_contact_first_name %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_contact_last_name %> 
+			<%= f.text_field :distributor_contact_last_name %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_contact_email %> 
+			<%= f.text_field :distributor_contact_email %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_contact_phone %> 
+			<%= f.text_field :distributor_contact_phone %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_address_1 %> 
+			<%= f.text_field :distributor_address_1 %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_address_2 %> 
+			<%= f.text_field :distributor_address_2 %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_city %> 
+			<%= f.text_field :distributor_city %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_state %> 
+			<%= f.text_field :distributor_state %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_zip %> 
+			<%= f.text_field :distributor_zip %>
+		</Li>
+		<li class="required">
+			<%= f.label :distributor_notes %> 
+			<%= f.text_area :distributor_notes, cols: 40, rows: 7  %>
+		</Li>
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', parents_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+<% end %>

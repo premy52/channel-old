@@ -1,0 +1,22 @@
+<header>
+	<h1><%= pluralize(@banner.authorizations.size, 'authorization') %> </h1> 
+	for <%= link_to(@banner.parent.corpname, @banner.parent) %> 
+	<%= link_to(@banner.banner_name, parent_banner_path(@banner.parent, @banner)) %> 
+</header>
+
+<ol>
+	<% @banner.authorizations.each do |authorization| %>
+
+	<article class="parent">
+			<li>
+				<strong>
+					<%= link_to(authorization.flavor_descriptor, parent_banner_authorization_path(@banner.parent,@banner,authorization)) %> <%= authorization.bssw %>
+				</strong>
+			</li>
+	</article>
+
+	<% end %>
+</ol>
+
+@banner.authorized_fgskus.includes(:flavor).order('sizegroup', "flavors.shorthand")
+@banner.authorizations.includes(:fgsku, :flavor).order('sizegroup', "flavors.shorthand")

@@ -1,0 +1,73 @@
+<%= form_for([@parent, @banner]) do |f| %>
+  <%= render 'shared/errors', object: @banner %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label :banner_name %> <%= f.text_field :banner_name, size: 65, autofocus: true %></Li>
+		<li class="required"><%= f.label "Priority (5=Highest)" %>
+			<% [5,4,3,2,1].each do |priority| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :priority, priority %></td>
+						<td><%= priority %></td>
+					</tr>
+				</table>			
+			<% end %>
+		</li>		<li class="required"><%= f.label :country %>
+			<% Fgsku::COUNTRIES.each do |country| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :country, country %></td>
+						<td><%= country %></td>
+					</tr>
+				</table>			
+			<% end %>
+		</li>
+
+		<li class="required"> <%= f.label "Banner Default DC:" %>
+			<% Distributor.all.order("distributor_name").each do |distributor| %>
+			<b><i>
+				<% if @banner.dc && @banner.dc.distributor_id == distributor.id %>
+						<strong><font color="red"> <%= distributor.distributor_name %>: </font></strong>
+					<% else %>
+						<%= distributor.distributor_name %>:
+				<% end %>
+			</i></b>
+
+				<% Dc.where(distributor_id: distributor.id).order("dc_name").each do |dc| %>
+					<table>
+						<tr>
+							<td><%= f.radio_button :dc_id, dc.id  %></td>
+							<td><% if @banner.dc_id == dc.id %>
+								<strong><font color="red"> <%= dc.dc_name %> </font></strong>
+							<% else %>
+								<%= dc.dc_name %>
+								<% end %>
+							</td>
+						</tr>
+					</table>			
+				<% end %>
+			<% end %>
+		</li>
+
+		<li>
+			<strong><%= f.label 'Authorizations:' %></strong>
+			<%= f.collection_check_boxes(:authorized_fgsku_ids, @banner.available_fgskus, :id, :flavor_descriptor) %>
+		</li>
+		
+		<li class="required"><%= f.label :banner_store_count %> <%= f.number_field :banner_store_count %></li>
+		<li class="required"><%= f.label :banner_review_date %> <%= f.date_select :banner_review_date %></li>
+		<li class="required"><%= f.label :banner_city %><%= f.text_field :banner_city%></li>
+		<li class="required"><%= f.label :banner_state %><%= f.text_field :banner_state%></li>
+		<li class="required"><%= f.label :banner_buyer_first_name %><%= f.text_field :banner_buyer_first_name%></li>
+		<li class="required"><%= f.label :banner_buyer_last_name %><%= f.text_field :banner_buyer_last_name%></li>
+		<li class="required"><%= f.label :banner_broker_first_name %><%= f.text_field :banner_broker_first_name%></li>
+		<li class="required"><%= f.label :banner_broker_last_name %><%= f.text_field :banner_broker_last_name%></li>
+		<li class="required"><%= f.label :banner_notes %> <%= f.text_area :banner_notes, cols: 40, rows: 7  %></li>
+		<li class="required"><%= f.label :logo_file_name %> <%= f.text_field :logo_file_name, size: 30, placeholder: "GIF, JPG or PNG file name" %></li>
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', parent_banners_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+<% end %>

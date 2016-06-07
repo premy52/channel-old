@@ -1,0 +1,41 @@
+<%= form_for([@flavor, @fgsku]) do |f| %>
+  <%= render 'shared/errors', object: @fgsku %>
+	<fieldset>
+	<ol>
+
+		<li class="required"><%= f.label :country %>
+			<% Fgsku::COUNTRIES.each do |country| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :country, country %></td>
+						<td><%= country %></td>
+					</tr>
+				</table>			
+			<% end %>
+		</li>
+		<li class="required"><%= f.label :sizegroup %>
+			<% Fgsku::SIZEGROUPS.each do |sizegroup| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :sizegroup, sizegroup %></td>
+						<td><%= sizegroup %></td>
+					</tr>
+				</table>			
+			<% end %>
+		</li>
+
+		<li class="required"><%= f.label "Net Wt in Ounces:" %> <%= f.number_field :weightoz, :class => 'text_field', :step => 0.01 %></Li>
+		<li class="required"><%= f.label "Inner Pack Count:" %> <%= f.number_field :innercount %></Li>
+		<li class="required"><%= f.label "Outer Pack Count" %><%= f.number_field :outercount %></Li>
+		<li class="required"><%= f.label "Base UPC:" %><%= f.text_field :upc %></Li>
+		<li class="required"><%= f.label "Inner Pack UPC:" %><%= f.text_field :innerupc %></Li>
+		<li class="required"><%= f.label "Outer Pack UPC:" %><%= f.text_field :outerupc %></Li>
+		<li class="required"><%= f.label :comment %><%= f.text_area :comment, cols: 40, rows: 7 %></Li>
+
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', flavor_fgskus_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+<% end %>

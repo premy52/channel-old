@@ -1,0 +1,51 @@
+<%= form_for [@banner.parent, @banner, @store] do |f| %>
+  <%= render 'shared/errors', object: @store %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label :store_name %> <%= f.text_field :store_name, size: 65, autofocus: true %></Li>
+
+		<li class="required"> <%= f.label "Distributor & DC:" %>
+			<% Distributor.all.order("distributor_name").each do |distributor| %>
+				<% if @store.dc && @store.dc.distributor_id == distributor.id %>
+						<strong><font color="red"> <%= distributor.distributor_name %>: </strong></font>
+					<% else %>
+						<%= distributor.distributor_name %>:
+				<% end %>
+					
+				<% Dc.where(distributor_id: distributor.id).order("dc_name").each do |dc| %>
+					<table>
+						<tr>
+							<td>
+								<%= f.radio_button :dc_id, dc.id  %>  
+							</td>
+							<td>
+							<% if @store.dc_id == dc.id %>
+								<strong><font color="red"> <%= dc.dc_name %> </strong></font>
+							<% else %>
+								<%= dc.dc_name %>
+								<% end %>
+							</td>
+						</tr>
+					</table>			
+				<% end %>
+			<% end %>
+		</li>
+
+		<li class="required"><%= f.label :street_address %> <%= f.text_field :street_address, size: 65%></Li>
+		<li class="required"><%= f.label :city %> <%= f.text_field :city %></Li>
+		<li class="required"><%= f.label :state %> <%= f.text_field :state %></Li>
+		<li class="required"><%= f.label :zip %><%= f.text_field :zip%></Li>
+
+		<p>
+			<%= f.submit %>
+			<% if @store.id %>
+				<%= link_to 'CANCEL', parent_banner_store_path, class: 'button'%>
+			<% else %>
+				<%= link_to 'CANCEL', parent_banner_stores_path, class: 'button'%>
+			<% end %>
+		</p> 
+
+		</ol>
+	</fieldset>
+
+<% end %>

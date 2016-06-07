@@ -1,0 +1,31 @@
+<article id="parent" class="parent">
+	<header>
+	<%= @flavor.descriptor %>
+	<%= @fgsku.id %> 
+		<%= link_to(@flavor.descriptor, flavor_fgsku_path(@flavor, @fgsku)) %> <h1><%= @fgsku.id %> Oz.</h1>
+	</header>
+
+	<p><%= pluralize(@fgsku.authorizing_banners.size, 'Authorizing Banner') %>:</p>
+		<ol>
+		<% @fgsku.authorizing_banners.each do |authorizing_banner| %>
+		<article class="parent">
+			<header>
+				<li><%= link_to(
+					 "#{authorizing_banner.banner_name}", parent_banner_path(authorizing_banner.parent, authorizing_banner)) %>
+					 (<%= authorizing_banner.parent.corpname %>)
+				</li>
+			<% end %>
+		</ol>
+  
+  <footer>
+  	<% if current_user_admin? %>
+	    <nav>
+				<%= link_to 'Edit this fgsku', edit_flavor_fgsku_path(@flavor,@fgsku), class: 'button'  %>
+				<%= link_to 'Delete this fgsku', flavor_fgsku_path(@fgsku.id, @fgsku), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@fgsku.id} oz. #{@fgsku.id} ?"}  %>
+	    </nav>
+	  <% end %>
+  </footer>
+
+</article>

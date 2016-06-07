@@ -1,0 +1,70 @@
+<%= form_for([@banner.parent, @banner, @banner_promo]) do |f| %>
+  <%= render 'shared/errors', object: @banner_promo %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label "Promo Name (Required)" %><%= f.text_field :comment, :size=>"75", autofocus: true  %></Li>
+		<li class="required"><%= f.label :start_date %> <%= f.date_select :start_date%></Li>
+		<li class="required"><%= f.label :end_date %> <%= f.date_select :end_date %></Li>
+
+		<li class="required"><%= f.label :promo_vehicle %>
+			<% BannerPromo::VEHICLES.each do |vehicle| %>
+				<table>
+					<tr>
+						<td><%= f.radio_button :promo_vehicle, vehicle %></td>
+						<td>
+							<% if @banner_promo.promo_vehicle == vehicle %>
+								<strong><font color="red"> <%= vehicle %> </strong></font>
+							<% else %>
+								<%= vehicle %> 
+							<% end %>
+						</td>
+					</tr>
+				</table>			
+			<% end %>
+		</Li>
+		<li class="required"><%= f.label :promo_method %>
+			<% BannerPromo::METHODS.each do |method| %>
+				<table>
+					<tr>
+						<td>
+							<%= f.radio_button :promo_method, method %>
+						</td>
+						<td>
+							<% if @banner_promo.promo_method == method %>
+								<strong><font color="red"> <%= method %> </strong></font>
+							<% else %>
+								<%= method %>
+							<% end %>
+						</td>
+					</tr>
+				</table>			
+			<% end %>
+		</Li>
+		<li class="required"><%= f.label :status %>
+			<% BannerPromo::STATUS.each do |status| %>
+				<table>
+					<tr>
+						<td>
+							<%= f.radio_button :status, status %>
+						</td>
+						<td>
+							<% if @banner_promo.status == status %>
+								<strong><font color="red"> <%= status %> </strong></font>
+							<% else %>
+								<%= status %>
+							<% end %>
+
+						</td>
+					</tr>
+				</table>			
+			<% end %>
+		</Li>
+		<li class="required"><%= f.label :promo_level %> <%= f.number_field :promo_level, :class => 'text_field', :step => 0.01 %></Li>
+
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', parent_banner_banner_promos_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+<% end %>

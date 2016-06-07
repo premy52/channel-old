@@ -1,0 +1,15 @@
+<header>
+	<h1><%= link_to(@flavor.descriptor, @flavor) %> </h1>
+	<%= pluralize(@fgskus.size, 'SKU') %>
+</header>
+
+<ol>
+	<% Fgsku::SIZEGROUPS.each do |sizegroup| %>
+		<strong><%= sizegroup %>: </strong>
+			<% @fgskus.where(sizegroup: sizegroup).each do |fgsku| %>
+				<li>
+					<%= link_to(fgsku.country, flavor_fgsku_path(@flavor, fgsku)) %>
+			</li> 
+		<% end %>
+	<% end %>
+</ol> 

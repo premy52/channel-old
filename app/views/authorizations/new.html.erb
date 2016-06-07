@@ -1,0 +1,10 @@
+<article>
+	<header>
+
+	<h1>New Authorization for <%= @banner.banner_name %></h1>
+	 <%= Fgsku.where(country: @banner.country).count%> <%= @banner.country%> SKUs Available
+
+	<%= render 'authorizationform' %>
+
+	</header>
+</article>

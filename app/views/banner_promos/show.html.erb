@@ -1,0 +1,29 @@
+<article id="parent" class="parent">
+	<header>
+		<h1><%= @banner_promo.comment %> Promotion </h1> 
+		</header>
+		for
+		<%= link_to(@banner_promo.banner.parent.corpname, parent_path(@banner_promo.banner.parent)) %>/
+		<%= link_to(@banner_promo.banner.banner_name, parent_banner_path(@banner_promo.banner.parent, @banner_promo.banner)) %>
+
+				<p> Starts: <%= @banner_promo.start_date %>	</p>
+				<p> Ends: <%= @banner_promo.end_date %>	</p>
+				<p> Duration: <%= (@banner_promo.end_date - @banner_promo.start_date).to_i %>	days</p>
+				<p> Vehicle: <%= @banner_promo.promo_vehicle %> </p>
+		    <p> Method: <%= @banner_promo.promo_method %>	 </p>
+		    <p> Level: <%= @banner_promo.promo_level %>	 </p>
+		    <p> Status: <%= @banner_promo.status %>	 </p>
+		    <p> Comment: <%= @banner_promo.comment %>	 </p>
+		    <p> Created at: <%= @banner_promo.created_at %>	 </p>
+		    <p> Last Updated: <%= @banner_promo.updated_at %>	 </p>
+		
+  <footer>
+	    <nav>
+				<%= link_to 'Edit this banner_promo', edit_parent_banner_banner_promo_path(@banner.parent, @banner, @banner_promo), class: 'button'  %>
+				<%= link_to 'Delete this banner_promo', parent_banner_banner_promo_path(@banner.parent, @banner, @banner_promo), 
+										class: 'button', 
+										method: :delete, data: {confirm: "Are you sure you want to delete #{@banner_promo.comment}?"}  %>
+	    </nav>
+  </footer>
+
+</article>

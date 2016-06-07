@@ -1,0 +1,27 @@
+// Place all the styles related to the banners controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* BANNERS */
+
+ol#banners {
+  font-size: 1.15em;
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin: 1em 0;
+
+    span {
+      &.date {
+        font-size: .9em;
+        font-weight: bold;
+        color: $secondary-text-color;
+      }
+    }
+
+    p {
+      font-size: .95em;
+    }
+  }
+}

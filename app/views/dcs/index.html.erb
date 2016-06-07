@@ -1,0 +1,17 @@
+dont need
+<header>
+	<h1><%= pluralize(@dcs.size, 'DC') %> for <%= link_to(@distributor.distributor_name, @distributor) %> </h1>
+</header>
+
+<ol>
+	<% @distributor.dcs.order("dc_name").each do |dc| %>
+
+	<article class="parent">
+		<header>
+			<li>
+				<strong>
+					<%= link_to(dc.dc_name, distributor_dc_path(@distributor,dc)) %> 
+				</strong>
+			</li>
+	<% end %>
+</ol>

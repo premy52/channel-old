@@ -1,0 +1,74 @@
+<% content_for(:title, "#{@distributor.distributor_name} #{@dc.dc_name}") %>
+<article id="parent" class="parent">
+	<header>
+		<%= link_to(@distributor.distributor_name, @dc.distributor) %> <h1><%= @dc.dc_name %></h1>
+	</header>
+
+		Default DC for Banners:
+		<ol>
+		<% Banner.where(dc_id: @dc.id).order("banner_name").each do |banner| %>
+		<article class="parent">
+			<header>
+				<li>
+					<strong>
+						<%= link_to(banner.banner_name, parent_banner_path(banner.parent, banner )) %> </strong> :: 
+						<i><%= banner.parent.corpname %></i>
+				</li>
+			<% end %>
+		</ol>
+
+		Services Stores:
+		<ol>
+		<% Store.where(dc_id: @dc.id).order("store_name").each do |store| %>
+		<article class="parent">
+			<header>
+				<li>
+					<strong>
+						<%= link_to(store.store_name, parent_banner_store_path(store.banner.parent, store.banner, store )) %> </strong> 
+						<%= store.city %>, <%= store.state %> :: 
+						<i><%= store.banner.parent.corpname %> <%= store.banner.banner_name %></i>
+				</li>
+			<% end %>
+		</ol>
+
+		<p> 
+			<%= @dc.dc_contact_first_name %> <%= @dc.dc_contact_last_name %>, primary contact
+		</p>
+		<p> 
+			<%= @dc.dc_city %>, <%= @dc.dc_state %> 
+		</p>
+		<p>dc Level Notes:<br/> 
+			<%= @dc.dc_notes %> 
+		</p>	
+
+  <footer>
+    <nav>
+			<%= link_to 'Edit this DC', edit_distributor_dc_path(@distributor,@dc), class: 'button'  %>
+			<%= link_to 'Delete this DC', distributor_dc_path(@distributor,@dc), 
+									class: 'button', 
+									method: :delete, data: {confirm: "Are you sure you want to delete #{@dc.dc_name}?"}  %>
+    </nav>
+  </footer>
+</article>
+
+<% content_for(:side)	do %>
+  <% total_dc_slots = @dc.slotted_fgskus.size %>
+	<h3><%= pluralize(total_dc_slots, 'FG SKU') %> Slotted</h3>
+		<article class="parent">
+			<table>
+				<th>SKU</th>
+				<% @dc.slotted_fgskus.includes(:flavor).order('sizegroup', "flavors.shorthand").each do |fgsku| %>
+					<tr>
+					<td> <%= link_to(
+						 "#{fgsku.flavor.shorthand} 
+						 #{fgsku.country} 
+						 #{fgsku.sizegroup}", flavor_fgsku_path(fgsku.flavor, fgsku)) %>
+					</td>
+					</tr>
+				<% end %>
+		
+			</table>
+	<nav>
+	 	<%= link_to "Change SKU Slottings", edit_distributor_dc_path(@distributor,@dc), class: "button" %>
+	</nav>
+<% end %>

@@ -1,0 +1,25 @@
+<aside id="sidebar">
+	<nav>
+		<ul>
+			<li class="all-parents"><%= link_to "All Parent Organizations", parents_path, class: 'button'  %></li>
+			<li class="all-parents"><%= link_to "Distributor:All Banners",distributors_path, class: 'button'  %></li>
+			<i>
+			<li class="all-parents"><%= link_to "Current", filtered_distributors_path(:current), class: 'button'  %></li>
+			<li class="all-parents"><%= link_to "Prospects", filtered_distributors_path(:prospect), class: 'button'  %></li>
+			<li class="all-parents"><%= link_to "Priorities", filtered_distributors_path(:priority), class: 'button'  %></li>
+			</i>
+			<li class="all-parents"><%= link_to "All Flavors", flavors_path, class: 'button'  %></li>
+			<% if current_user_admin? %>
+				<li class="create-parent">
+					<%= link_to "Add New Retailer Parent", new_parent_path, class: 'button'  %>
+				</li>
+				<li class="create-parent">
+					<%= link_to "Add New Distributor", new_distributor_path, class: 'button'  %>
+				<li class="create-parent">
+					<%= link_to "Add New Flavor", new_flavor_path, class: 'button'  %>
+				</li>
+			<% end %>
+		</ul>
+	</nav>
+<%= content_for(:side) %>
+</aside>

@@ -1,0 +1,12 @@
+<h1><%= pluralize(@users.size, 'User')%> </h1>
+
+<ol>
+	<% @users.order("name").each do |user| %>
+			<header>
+			<li>
+				<%= link_to user.name, user %> 
+			</li>
+	<% end %>
+	</header>
+</ol>
+

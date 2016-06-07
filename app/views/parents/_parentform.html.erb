@@ -1,0 +1,41 @@
+<%= form_for(@parent) do |f| %>
+  <%= render 'shared/errors', object: @parent %>
+	<fieldset>
+	<ol>
+		<li class="required"><%= f.label "Company Name:" %> <%= f.text_field :corpname, size: 65, autofocus: true %></Li>
+		<li class="required"><%= f.label "Total # Stores:" %> <%= f.number_field :store_count %></Li>
+
+		<li class="required"><%= f.label "Channel:" %>
+
+			<% Parent::CHANNELS.each do |channel| %>
+				<table>
+					<tr>
+						<td>
+							<%= f.radio_button :channel_segment, channel %>
+						</td>
+						<td>
+							<%= channel %>
+						</td>
+					</tr>
+				</table>			
+			<% end %>
+
+		</Li>
+		
+		<li class="required"><%= f.label "Buying Office City:" %> <%= f.text_field :hqcity %></Li>
+		<li class="required"><%= f.label "Buying Office State:" %> <%= f.text_field :hqstate %></Li>
+		<li class="required"><%= f.label "HQ Buyer First Name:" %> <%= f.text_field :buyerfirstname %></Li>
+		<li class="required"><%= f.label "HQ Buyer Last Name:" %> <%= f.text_field :buyerlastname %></Li>
+		<li class="required"><%= f.label "HQ Broker First Name:" %> <%= f.text_field :ourbrokerfirstname %></Li>
+		<li class="required"><%= f.label "HQ Broker Last Name:" %> <%= f.text_field :ourbrokerlastname %></Li>
+		<li class="required"><%= f.label "Next Review Date:" %><%= f.date_select :nextreviewdate %> </Li>
+		<li class="required"><%= f.label "General Notes:" %> <%= f.text_area :corp_notes, cols: 40, rows: 7  %></Li>
+		<li class="required"><%= f.label "Logo File Name:" %> <%= f.text_field :logo_file_name, size: 30, placeholder: "GIF, JPG or PNG file name" %></Li>
+		<p>
+			<%= f.submit %>
+			<%= link_to 'CANCEL', parents_path, class: 'button'%>
+		</p>
+	</fieldset>
+
+
+<% end %>

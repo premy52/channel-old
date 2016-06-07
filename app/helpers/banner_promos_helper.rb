@@ -1,0 +1,2 @@
+module BannerPromosHelper
+end
