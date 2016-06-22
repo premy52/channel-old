@@ -16,7 +16,7 @@ class BannersController < ApplicationController
 	
 	def update
 		if @banner.update(banner_params)
-			redirect_to parent_banner_path, notice: "Banner successfully updated"			
+			redirect_to parent_banner_path, notice: 'Banner successfully updated'
 		else
 			render :edit
 		end

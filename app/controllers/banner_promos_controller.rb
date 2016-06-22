@@ -5,7 +5,7 @@ class BannerPromosController < ApplicationController
 	before_action :set_promo, only: [:show, :edit, :update, :destroy] 
 
 	def index
-		fail
+		@banner_promos = @banner.banner_promos.all
 	end
 
 	def show
@@ -16,7 +16,7 @@ class BannerPromosController < ApplicationController
 
 	def update
 		if @banner_promo.update(promo_params)
-			redirect_to parent_banner_banner_promo_path, notice: "Promo updated"
+			redirect_to parent_banner_banner_promos_path, notice: "Promo updated"
 		else
 			render :edit
 		end
@@ -57,7 +57,7 @@ private
 					)
 	end
 
-		def set_banner
+	def set_banner
 		if @banner
 			@banner = Banner.find_by!(slug: params[:id])
 		elsif params[:banner_id].present?
@@ -65,6 +65,7 @@ private
 		else
 			@banner = Banner.find_by!(slug: params[:id])
 		end
+	end
 
 	# def set_banner
 	# 	parameter = :banner_id || :id

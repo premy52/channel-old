@@ -1,3 +1,8 @@
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+
+<div class ="container">
+
 <h1><%= pluralize(@parents.size, 'Parent Organization')%> </h1>
 <%= Time.now.to_s(:long) %> <br/>
 
@@ -6,11 +11,14 @@
 		<article class="parent">
 			<header>
 			<li><%= image_for(parent) %>
-			<strong>
-				<%= link_to(parent.corpname, parent) %>
-			</strong> | 
-				<%= pluralize(parent.store_count, 'store') %>
+				<strong>
+					<%= link_to(parent.corpname, parent) %>
+				</strong> | 
+					<%= pluralize(parent.store_count, 'store') %>
+			</li>
 	<% end %>
 	</header>
 	</article>
 </ol>
+
+</div>

@@ -1,0 +1,18 @@
+<header>
+	<h1><%= link_to(@banner.banner_name, parent_banner_path(@banner.parent, @banner)) %> </h1>
+</header>
+
+	<h2><%= pluralize(@banner.banner_promos.size, 'Promo') %> in <%=@banner.banner_name %></h2>
+		<ol>
+		<% @banner.banner_promos.order("start_date").each do |promo| %>
+		<article class="parent">
+			<header>
+				<li>
+				 	<%= promo.start_date %> to <%= promo.end_date %> 
+					<strong><%= link_to(promo.comment, parent_banner_banner_promo_path(@banner.parent, @banner, promo )) %> </strong>
+					 <%= promo.promo_vehicle %> <%= promo.promo_level %> <%= promo.promo_method %> <%= promo.status %> 
+				</li>
+			<% end %>
+		</ol>
+ 	<%= link_to "Add a Promo", new_parent_banner_banner_promo_path(@parent,@banner),
+  								class: "button ok addbanner" %>

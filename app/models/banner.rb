@@ -41,8 +41,12 @@ class Banner < ActiveRecord::Base
 		Fgsku.where(country: self.country).includes(:flavor).order('sizegroup', "flavors.shorthand")
 	end
 
-	def has_authorizations
+	def self.has_authorizations
 		self.authorizations.any?
+	end
+
+	def self.current_customers
+		where(self.authorizations.any?)
 	end
 
 	def total_authorizations

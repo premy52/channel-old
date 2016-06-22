@@ -2,9 +2,9 @@
   <%= render 'shared/errors', object: @banner %>
 	<fieldset>
 	<ol>
-		<li class="required"><%= f.label :banner_name %> <%= f.text_field :banner_name, size: 65, autofocus: true %></Li>
+		<li class="required"><%= f.label :banner_name %> <%= f.text_field :banner_name, size: 65, autofocus: true %></li>
 		<li class="required"><%= f.label "Priority (5=Highest)" %>
-			<% [5,4,3,2,1].each do |priority| %>
+			<% [5,4,3,2,1,0].each do |priority| %>
 				<table>
 					<tr>
 						<td><%= f.radio_button :priority, priority %></td>

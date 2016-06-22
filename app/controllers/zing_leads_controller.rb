@@ -1,0 +1,2 @@
+class ZingLeadsController < ApplicationController
+end

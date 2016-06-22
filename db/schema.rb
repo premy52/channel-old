@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531002002) do
+ActiveRecord::Schema.define(version: 20160621045942) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "banner_id"
@@ -64,6 +64,38 @@ ActiveRecord::Schema.define(version: 20160531002002) do
 
   add_index "banners", ["dc_id"], name: "index_banners_on_dc_id"
   add_index "banners", ["parent_id"], name: "index_banners_on_parent_id"
+
+  create_table "brokerages", force: true do |t|
+    t.string   "company"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.decimal  "rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  create_table "brokers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
+    t.integer  "brokerage_id"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  add_index "brokers", ["brokerage_id"], name: "index_brokers_on_brokerage_id"
 
   create_table "dc_slots", force: true do |t|
     t.integer  "dc_id"
@@ -226,6 +258,17 @@ ActiveRecord::Schema.define(version: 20160531002002) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",           default: false
+  end
+
+  create_table "zing_leads", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
   end
 
 end

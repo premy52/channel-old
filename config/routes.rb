@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :zing_leads
+  resources :brokers
+  resources :brokerages
+
   root "parents#index"
   resource :session
 

@@ -23,6 +23,14 @@ class Dc < ActiveRecord::Base
 		slug
 	end
 
+	def has_slots?
+		self.dc_slots.any?
+	end
+
+	def total_slots
+		self.dc_slots.count
+	end
+
 	# def generate_slug
 	# 	self.slug ||= dc_name.parameterize if dc_name
 	# end

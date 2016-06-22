@@ -1,7 +1,10 @@
 <h1>Distribution Profile</h1>
 <%= image_tag("arrow.png") %>
 <%= pluralize(@distributors.count, 'Distributor')%>; 
-	<%= pluralize(@dcs.count, 'DC') %>; <%= pluralize(@banners.count, 'Banner') %>
+	<%= pluralize(@dcs.count, 'Available DC') %> 
+	<% if @banners %>
+		; <%= pluralize(@banners.count, 'Banner') %>
+	<% end %>
 
 <article>
 <%-# START table header  -%>
@@ -36,7 +39,7 @@
 
 	<%-# START first level outline is distributors   -%>
 	<% @distributors.each do |distributor| %>
-	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= pluralize(distributor.dcs.size, 'DC') %></td></tr></strong>
+	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> xx of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
 
 			<%-# START 2 level outline is DCs   -%>
 				<% @dcs.where(distributor: distributor).each do |dc| %>
@@ -60,31 +63,31 @@
 					<%-# END DC Slots flavor columns  -%>
 				<%-# END 3a level outline is DC Slots   -%>
 
-				<%-# START 3b level outline is Banners   -%>
-					<% @banners.where(dc: dc).each do |banner| %>
-					<i>
-					<tr class="bannerrow"><td class="indent2"><%= link_to(banner.banner_name, edit_parent_banner_path(banner.parent,banner)) %> <%= pluralize(banner.banner_store_count, 'Str')%></td>
-					<th><%= banner.average_bssw.round(1) %></th>
 
-					<%-# START 4 level outline is Authorizations   -%>
-					<% @ranked_flavors.each do |flavor| %>
-						<% if banner.authorizations.includes(:fgsku).pluck(:flavor_id).include? flavor.id %>
-						<% this_auth = banner.authorizations.includes(:fgsku).find_by(:flavor_id)  %>
- 						<th><%= banner.auth_flavor_bssw_hash[flavor.shorthand].round(1).to_s %></th>
-						<% else %>
-							<th bgcolor="white"></th>
+				<% if @banners %>
+					<%-# START 3b level outline is Banners   -%>
+						<% @banners.where(dc: dc).each do |banner| %>
+						<i>
+						<tr class="bannerrow"><td class="indent2"><%= link_to(banner.banner_name, edit_parent_banner_path(banner.parent,banner)) %> <%= pluralize(banner.banner_store_count, 'Str')%></td>
+						<th><%= banner.average_bssw.round(1) %></th>
+
+						<%-# START 4 level outline is Authorizations   -%>
+						<% @ranked_flavors.each do |flavor| %>
+							<% if banner.authorizations.includes(:fgsku).pluck(:flavor_id).include? flavor.id %>
+							<% this_auth = banner.authorizations.includes(:fgsku).find_by(:flavor_id)  %>
+	 						<td align="center"><%= banner.auth_flavor_bssw_hash[flavor.shorthand].round(1).to_s %></td>
+							<% else %>
+								<td bgcolor="white"></td>
+							<% end %>
 						<% end %>
+						</tr>
+						</i>
+						<%-# END 4 level outline is Authorizations   -%>
 					<% end %>
-
-					</tr>
-					</i>
-
-					<%-# END 4 level outline is Authorizations   -%>
-
 				<% end %>
 				
 				<%-# END 3b level outline is Banners   -%>
-					
+
 			<% end %>
 			
 			<%-# END 2 level outline is DCs   -%>

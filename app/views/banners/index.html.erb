@@ -6,18 +6,16 @@
 <% storecume = 0 %>
 
 <ol>
-	<% @parent.banners.order("banner_name").each do |banner| %>
-
-	<article class="parent">
-		<header>
-			<li>
-				<strong>
-					<%= link_to(banner.banner_name, parent_banner_path(@parent,banner)) %>: <%= banner.banner_broker_first_name %> <%= banner.banner_broker_last_name %> 
+	<% @parent.banners.order('banner_name').each do |banner| %>
+    <li>
+			<strong>
+				<%= link_to(banner.banner_name, parent_banner_path(@parent,banner)) %>: <%= banner.banner_broker_first_name %> <%= banner.banner_broker_last_name %>
 				</strong>
 					<%= pluralize(banner.banner_store_count, 'Store') %>
-			</li>
-		<% banner.banner_store_count = 0 if banner.banner_store_count.nil? %>
-		<% storecume += banner.banner_store_count %>
-	<% end %>
+      <% banner.banner_store_count = 0 if banner.banner_store_count.nil? %>
+      <% storecume += banner.banner_store_count %>
+    </li>
+  <% end %>
 </ol>
+
 <%= storecume %> Stores by banners

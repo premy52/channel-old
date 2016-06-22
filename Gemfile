@@ -10,8 +10,13 @@ group :development, :test do
 end
 # Use postgresql as the database for Active Record in production
 group :production do
-	gem "pg"
+	gem 'pg'
 end
+
+# Use Bootstrap
+gem 'bootstrap-sass',  '~> 3.2.0'
+gem 'autoprefixer-rails'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -49,9 +54,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'friendly_id', '~> 5.1.0'
 
 group :test, :development do 
-	gem "rspec-rails"	
+	gem 'rspec-rails'
 end
 
 group :test  do 
-	gem "capybara"	
+	gem 'capybara'
 end

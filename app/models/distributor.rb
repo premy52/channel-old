@@ -14,7 +14,8 @@ class Distributor < ActiveRecord::Base
 		'Not Classified'
 		]
 
-	validates :distributor_name, :country, presence: true, uniqueness: true
+	validates :distributor_name, uniqueness: true
+	validates :country, presence: true
 	validates :channel_segment, inclusion: { in: CHANNELS }
 	
 	has_many :dcs, dependent: :destroy
@@ -23,6 +24,10 @@ class Distributor < ActiveRecord::Base
 
 	def dc_count
 		self.dcs.count
+	end
+
+	def stocking_dcs_count
+		self.dcs.where(has_slots?).count
 	end
 
   def to_param

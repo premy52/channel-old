@@ -2,9 +2,9 @@
   <%= render 'shared/errors', object: @banner_promo %>
 	<fieldset>
 	<ol>
-		<li class="required"><%= f.label "Promo Name (Required)" %><%= f.text_field :comment, :size=>"75", autofocus: true  %></Li>
-		<li class="required"><%= f.label :start_date %> <%= f.date_select :start_date%></Li>
-		<li class="required"><%= f.label :end_date %> <%= f.date_select :end_date %></Li>
+		<li class="required"><%= f.label "Promo Name (Required)" %><%= f.text_field :comment, :size=>"75", autofocus: true  %></li>
+		<li class="required"><%= f.label :start_date %> <%= f.date_select :start_date%></li>
+		<li class="required"><%= f.label :end_date %> <%= f.date_select :end_date %></li>
 
 		<li class="required"><%= f.label :promo_vehicle %>
 			<% BannerPromo::VEHICLES.each do |vehicle| %>
@@ -21,7 +21,7 @@
 					</tr>
 				</table>			
 			<% end %>
-		</Li>
+		</li>
 		<li class="required"><%= f.label :promo_method %>
 			<% BannerPromo::METHODS.each do |method| %>
 				<table>
@@ -39,7 +39,10 @@
 					</tr>
 				</table>			
 			<% end %>
-		</Li>
+		</li>
+
+		<li class="required"><%= f.label :promo_level %> <%= f.number_field :promo_level, :class => 'text_field', :step => 0.01 %></li>
+
 		<li class="required"><%= f.label :status %>
 			<% BannerPromo::STATUS.each do |status| %>
 				<table>
@@ -58,8 +61,7 @@
 					</tr>
 				</table>			
 			<% end %>
-		</Li>
-		<li class="required"><%= f.label :promo_level %> <%= f.number_field :promo_level, :class => 'text_field', :step => 0.01 %></Li>
+		</li>
 
 		<p>
 			<%= f.submit %>

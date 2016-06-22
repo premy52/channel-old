@@ -1,0 +1,39 @@
+<h1>Brokers Listing</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Brokerage</th>
+      <th>Address1</th>
+      <th>Address2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @brokers.order(:last_name).each do |broker| %>
+      <tr>
+        <td><%= broker.first_name %></td>
+        <td><%= broker.last_name %></td>
+        <td><%= broker.brokerage.company %></td>
+        <td><%= broker.address1 %></td>
+        <td><%= broker.address2 %></td>
+        <td><%= broker.city %></td>
+        <td><%= broker.state %></td>
+        <td><%= broker.zip %></td>
+        <td><%= link_to 'Show', broker %></td>
+        <td><%= link_to 'Edit', edit_broker_path(broker) %></td>
+        <td><%= link_to 'Destroy', broker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Broker', new_broker_path %>
