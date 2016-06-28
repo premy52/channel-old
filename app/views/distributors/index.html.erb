@@ -39,7 +39,7 @@
 
 	<%-# START first level outline is distributors   -%>
 	<% @distributors.each do |distributor| %>
-	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> xx of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
+	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= distributor.stocking_dcs_count%> of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
 
 			<%-# START 2 level outline is DCs   -%>
 				<% @dcs.where(distributor: distributor).each do |dc| %>

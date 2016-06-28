@@ -15,6 +15,7 @@ class Banner < ActiveRecord::Base
 
   belongs_to :parent
 	belongs_to :dc
+	belongs_to :broker
 	has_many :stores, dependent: :destroy
 	has_many :banner_promos, dependent: :destroy
 	has_many :authorizations, dependent: :destroy
@@ -28,11 +29,23 @@ class Banner < ActiveRecord::Base
 		"#{id}-#{banner_name.parameterize}"
 	end
 
-	def all_banners
+	def self.all_banners
 		Banner.all.order("banner_name")
 	end
 
-  def noreviewdate
+	def self.current_banners
+		Banner.joins(:authorizations).distinct.order("banner_name")
+	end
+
+	def self.prospect_banners
+		Banner.where.not(id: Authorization.select(:banner_id)).order("banner_name")
+	end
+
+	def self.priority_banners
+		Banner.where("priority > ?", 0).order("priority")
+	end
+
+	def noreviewdate
 		banner_review_date <= Date.today
 	end
 
@@ -41,12 +54,8 @@ class Banner < ActiveRecord::Base
 		Fgsku.where(country: self.country).includes(:flavor).order('sizegroup', "flavors.shorthand")
 	end
 
-	def self.has_authorizations
-		self.authorizations.any?
-	end
-
-	def self.current_customers
-		where(self.authorizations.any?)
+	def has_authorizations
+		authorizations.any?
 	end
 
 	def total_authorizations

@@ -27,7 +27,8 @@ class Distributor < ActiveRecord::Base
 	end
 
 	def stocking_dcs_count
-		self.dcs.where(has_slots?).count
+		self.dcs.where(id: DcSlot.select(:dc_id)).count
+#		Dc.where(id: DcSlot.select(:dc_id)).count
 	end
 
   def to_param

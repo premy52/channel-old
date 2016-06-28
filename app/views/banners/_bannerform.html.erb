@@ -49,6 +49,33 @@
 			<% end %>
 		</li>
 
+		<li class="required"> <%= f.label "Banner Broker:" %>
+			<% Brokerage.all.order("company").each do |brokerage| %>
+			<b><i>
+				<% if @banner.broker && @banner.broker.brokerage_id == brokerage.id %>
+						<strong><font color="red"> <%= brokerage.company %>: </font></strong>
+					<% else %>
+						<%= brokerage.company %>:
+				<% end %>
+			</i></b>
+
+				<% Broker.where(brokerage_id: brokerage.id).order("last_name").each do |broker| %>
+					<table>
+						<tr>
+							<td><%= f.radio_button :broker_id, broker.id  %></td>
+							<td><% if @banner.broker_id == broker.id %>
+								<strong><font color="red"> <%= broker.first_name %> <%= broker.last_name %></font></strong>
+							<% else %>
+								<%= broker.first_name %> <%= broker.last_name %>
+								<% end %>
+							</td>
+						</tr>
+					</table>			
+				<% end %>
+			<% end %>
+		</li>
+
+
 		<li>
 			<strong><%= f.label 'Authorizations:' %></strong>
 			<%= f.collection_check_boxes(:authorized_fgsku_ids, @banner.available_fgskus, :id, :flavor_descriptor) %>

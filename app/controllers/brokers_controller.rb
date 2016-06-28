@@ -73,6 +73,8 @@ class BrokersController < ApplicationController
                                       :first_name, 
                                       :last_name,
                                       :brokerage_id,
+                                      :email,
+                                      :phone,
                                       :address1, 
                                       :address2, 
                                       :city, 

@@ -3,9 +3,11 @@
 <table>
   <thead>
     <tr>
+      <th>Brokerage</th>
       <th>First Name</th>
       <th>Last Name</th>
-      <th>Brokerage</th>
+      <th>Email</th>
+      <th>Phone</th>
       <th>Address1</th>
       <th>Address2</th>
       <th>City</th>
@@ -18,9 +20,11 @@
   <tbody>
     <% @brokers.order(:last_name).each do |broker| %>
       <tr>
+        <td><%= broker.brokerage.company %></td>
         <td><%= broker.first_name %></td>
         <td><%= broker.last_name %></td>
-        <td><%= broker.brokerage.company %></td>
+        <td><%= broker.email %></td>
+        <td><%= broker.phone %></td>
         <td><%= broker.address1 %></td>
         <td><%= broker.address2 %></td>
         <td><%= broker.city %></td>

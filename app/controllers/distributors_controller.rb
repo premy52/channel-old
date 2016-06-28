@@ -5,16 +5,15 @@ class DistributorsController < ApplicationController
 	def index
 		 case params[:coverage]
 		 	when "current"
-				#@banners = Banner.all.has_authorizations
-				@banner = Banner.joins(:authorizations)
+				@banners = Banner.current_banners
 		 	when "prospect"
-		 		fail
+				@banners = Banner.prospect_banners
 		 	when "priority"
-				@banners = Banner.where("priority > ?", 0)
+			@banners = Banner.priority_banners
 		 	when "no_banners"
 		 		@banners = nil
 		 	else
-				@banners = Banner.all.order("banner_name")
+				@banners = Banner.all_banners
 			end
 		@distributors = Distributor.all.order("distributor_name")
 		@dcs = Dc.all.order("dc_name")

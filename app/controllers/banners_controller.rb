@@ -61,6 +61,7 @@ private
 							:dc_id,
 							:priority,
 							:slug,
+							:broker_id,
 							authorized_fgsku_ids: []
 							)
 	end
