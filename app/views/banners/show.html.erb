@@ -42,7 +42,12 @@
   	<%= link_to "Add a Store", new_parent_banner_store_path(@parent,@banner),
   								class: "button ok addbanner" %>
 
-		<p> Broker: <%= @banner.banner_broker_first_name %> <%= @banner.banner_broker_last_name %> </p>
+		<p> Broker: 
+		<% if @banner.broker %>
+			<%= @banner.broker.first_name %> <%= @banner.broker.last_name %>, <%= @banner.broker.brokerage.company %>
+		<% else %>
+			NO BROKER ASSIGNED
+		<% end %>  </p>
 		<p> Total of <%= pluralize(@banner.banner_store_count, 'store') %></p>
 		<p> <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %>, buyer</p>
 		<p> <%= @banner.banner_city %>, <%= @banner.banner_state %> </p>

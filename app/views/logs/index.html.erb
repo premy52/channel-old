@@ -1,0 +1,52 @@
+<h1>Listing logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Logdate</th>
+      <th>Log notes</th>
+      <th>Outcome</th>
+      <th>Review</th>
+      <th>Action</th>
+      <th>Actiondate</th>
+      <th>Action status</th>
+      <th>Parent</th>
+      <th>Banner</th>
+      <th>Distributor</th>
+      <th>Dc</th>
+      <th>Broker</th>
+      <th></th>
+      <th>Manager</th>
+      <th>Store</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @logs.each do |log| %>
+      <tr>
+        <td><%= log.logdate %></td>
+        <td><%= log.log_notes %></td>
+        <td><%= log.outcome %></td>
+        <td><%= log.review %></td>
+        <td><%= log.action %></td>
+        <td><%= log.actiondate %></td>
+        <td><%= log.action_status %></td>
+        <td><%= log.parent %></td>
+        <td><%= log.banner %></td>
+        <td><%= log.distributor %></td>
+        <td><%= log.dc %></td>
+        <td><%= log.broker %></td>
+        <td><%= log.manager %></td>
+        <td><%= log.store %></td>
+        <td><%= link_to 'Show', log %></td>
+        <td><%= link_to 'Edit', edit_log_path(log) %></td>
+        <td><%= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Log', new_log_path %>

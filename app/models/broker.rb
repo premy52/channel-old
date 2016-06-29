@@ -6,4 +6,7 @@ class Broker < ActiveRecord::Base
 
   belongs_to :brokerage
   has_many :banners
+  has_many :parents
+  has_many :distributors
+  has_many :logs
   end

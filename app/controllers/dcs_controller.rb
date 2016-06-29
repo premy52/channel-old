@@ -61,6 +61,7 @@ private
 																:dc_zip,
 																:dc_notes,
 																:country,
+																:listprice,
 																:slug,
 																slotted_fgsku_ids: []
 																)

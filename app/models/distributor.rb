@@ -18,6 +18,8 @@ class Distributor < ActiveRecord::Base
 	validates :country, presence: true
 	validates :channel_segment, inclusion: { in: CHANNELS }
 	
+	belongs_to :broker
+	has_many :logs
 	has_many :dcs, dependent: :destroy
 
 #	before_validation :generate_slug	

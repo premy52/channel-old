@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :logs
+
+  resources :managers
+
   resources :zing_leads
   resources :brokers
   resources :brokerages

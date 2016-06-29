@@ -18,6 +18,7 @@ class Banner < ActiveRecord::Base
 	belongs_to :broker
 	has_many :stores, dependent: :destroy
 	has_many :banner_promos, dependent: :destroy
+	has_many :logs
 	has_many :authorizations, dependent: :destroy
 	has_many :authorized_fgskus, through: :authorizations, source: :fgsku
 #	has_many :fgskus, through: :authorizations

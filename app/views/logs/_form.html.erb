@@ -1,0 +1,73 @@
+<%= form_for(@log) do |f| %>
+  <% if @log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h2>
+
+      <ul>
+      <% @log.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :logdate %><br>
+    <%= f.date_select :logdate %>
+  </div>
+  <div class="field">
+    <%= f.label :log_notes %><br>
+    <%= f.text_area :log_notes %>
+  </div>
+  <div class="field">
+    <%= f.label :outcome %><br>
+    <%= f.text_field :outcome %>
+  </div>
+  <div class="field">
+    <%= f.label :review %><br>
+    <%= f.text_field :review %>
+  </div>
+  <div class="field">
+    <%= f.label :action %><br>
+    <%= f.text_field :action %>
+  </div>
+  <div class="field">
+    <%= f.label :actiondate %><br>
+    <%= f.date_select :actiondate %>
+  </div>
+  <div class="field">
+    <%= f.label :action_status %><br>
+    <%= f.text_field :action_status %>
+  </div>
+  <div class="field">
+    <%= f.label :parent_id %><br>
+    <%= f.text_field :parent_id %>
+  </div>
+  <div class="field">
+    <%= f.label :banner_id %><br>
+    <%= f.text_field :banner_id %>
+  </div>
+  <div class="field">
+    <%= f.label :distributor_id %><br>
+    <%= f.text_field :distributor_id %>
+  </div>
+  <div class="field">
+    <%= f.label :dc_id %><br>
+    <%= f.text_field :dc_id %>
+  </div>
+  <div class="field">
+    <%= f.label :broker_id %><br>
+    <%= f.text_field :broker_id %>
+  </div>
+  <div class="field">
+    <%= f.label :manager_id %><br>
+    <%= f.text_field :manager_id %>
+  </div>
+  <div class="field">
+    <%= f.label :store_id %><br>
+    <%= f.text_field :store_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

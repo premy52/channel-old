@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628202257) do
+ActiveRecord::Schema.define(version: 20160629153902) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "banner_id"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20160628202257) do
     t.datetime "updated_at"
     t.string   "country"
     t.string   "slug"
+    t.decimal  "listprice"
   end
 
   add_index "dcs", ["distributor_id"], name: "index_dcs_on_distributor_id"
@@ -197,6 +198,42 @@ ActiveRecord::Schema.define(version: 20160628202257) do
   end
 
   add_index "ingredientskus", ["ingredient_id"], name: "index_ingredientskus_on_ingredient_id"
+
+  create_table "logs", force: true do |t|
+    t.date     "logdate"
+    t.text     "log_notes"
+    t.string   "outcome"
+    t.string   "review"
+    t.string   "action"
+    t.date     "actiondate"
+    t.string   "action_status"
+    t.integer  "parent_id"
+    t.integer  "banner_id"
+    t.integer  "distributor_id"
+    t.integer  "dc_id"
+    t.integer  "broker_id"
+    t.integer  "manager_id"
+    t.integer  "store_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "logs", ["banner_id"], name: "index_logs_on_banner_id"
+  add_index "logs", ["broker_id"], name: "index_logs_on_broker_id"
+  add_index "logs", ["dc_id"], name: "index_logs_on_dc_id"
+  add_index "logs", ["distributor_id"], name: "index_logs_on_distributor_id"
+  add_index "logs", ["manager_id"], name: "index_logs_on_manager_id"
+  add_index "logs", ["parent_id"], name: "index_logs_on_parent_id"
+  add_index "logs", ["store_id"], name: "index_logs_on_store_id"
+
+  create_table "managers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "parents", force: true do |t|
     t.string   "corpname"

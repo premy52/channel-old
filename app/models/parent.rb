@@ -24,7 +24,9 @@ class Parent < ActiveRecord::Base
 		message: "must reference a GIF, JPG, PNG or BMP image"
 	}
 
+	belongs_to :broker
 	has_many :banners, dependent: :destroy
+	has_many :logs
 
 #	before_validation :generate_slug
 

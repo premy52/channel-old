@@ -4,6 +4,8 @@
 		<%= link_to(@distributor.distributor_name, @dc.distributor) %> <h1><%= @dc.dc_name %></h1>
 	</header>
 
+	<p>List Price: <%= number_to_currency(@dc.listprice) %></p>
+
 		Default DC for Banners:
 		<ol>
 		<% Banner.where(dc_id: @dc.id).order("banner_name").each do |banner| %>

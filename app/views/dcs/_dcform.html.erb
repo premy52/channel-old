@@ -15,7 +15,10 @@
 				</table>			
 			<% end %>
 		</li>
-
+	<li class="required">
+    <%= f.label :listprice %><br>
+    <%= f.number_field :listprice, :class => 'text_field', :step => 0.2  %>
+  </li>
 		<li>
 			<strong><%= f.label 'Slotted SKUs:' %></strong>
 			<%= f.collection_check_boxes(:slotted_fgsku_ids, @dc.available_fgskus, :id, :flavor_descriptor) %>

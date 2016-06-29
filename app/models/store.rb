@@ -9,6 +9,7 @@ class Store < ActiveRecord::Base
 
   belongs_to :banner
   belongs_to :dc
+  has_many :logs
 
 #  before_validation :generate_slug
 

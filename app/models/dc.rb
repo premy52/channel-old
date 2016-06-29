@@ -8,6 +8,7 @@ class Dc < ActiveRecord::Base
   belongs_to :distributor
   has_many :stores
 	has_many :banners
+	has_many :logs
 	has_many :dc_slots, dependent: :destroy
 	has_many :slotted_fgskus, through: :dc_slots, source: :fgsku
 
