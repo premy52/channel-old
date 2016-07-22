@@ -6,17 +6,25 @@ class DistributorsController < ApplicationController
 		 case params[:coverage]
 		 	when "current"
 				@banners = Banner.current_banners
+				@dcs = Dc.dcs_with_current_banners
+				@distributors = Distributor.distributors_with_current_banners
 		 	when "prospect"
 				@banners = Banner.prospect_banners
+				@dcs = Dc.dcs_with_prospect_banners
+				@distributors = Distributor.distributors_with_prospect_banners
 		 	when "priority"
-			@banners = Banner.priority_banners
+				@banners = Banner.priority_banners
+				@dcs = Dc.all.order("dc_name")
+				@distributors = Distributor.all.order("distributor_name")
 		 	when "no_banners"
 		 		@banners = nil
+				@dcs = Dc.all.order("dc_name")
+				@distributors = Distributor.all.order("distributor_name")
 		 	else
 				@banners = Banner.all_banners
+				@dcs = Dc.all.order("dc_name")
+				@distributors = Distributor.all.order("distributor_name")
 			end
-		@distributors = Distributor.all.order("distributor_name")
-		@dcs = Dc.all.order("dc_name")
 		@authorizations = Authorization.all.includes(:fgsku).order("fgskus.sizegroup")
 		@dc_slots = DcSlot.all.includes(:fgsku).order("fgskus.sizegroup")
 		@ranked_flavors = Flavor.ranked_flavors

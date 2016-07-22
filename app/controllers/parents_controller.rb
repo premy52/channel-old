@@ -5,7 +5,10 @@ class ParentsController < ApplicationController
 	before_action :set_parent, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@parents = Parent.all
+#		@parents = Parent.all.order('channel_segment desc')
+		@parents = Parent.all.order('channel_segment desc')
+		@banners = Banner.all
+		@banner_promos = BannerPromo.all
 	end
 	def show
 	end

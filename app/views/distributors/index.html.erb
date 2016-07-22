@@ -1,28 +1,19 @@
-<h1>Distribution Profile</h1>
+<h1>Distribution Profile: <%= params[:coverage] %></h1>
 <%= image_tag("arrow.png") %>
 <%= pluralize(@distributors.count, 'Distributor')%>; 
-	<%= pluralize(@dcs.count, 'Available DC') %> 
-	<% if @banners %>
-		; <%= pluralize(@banners.count, 'Banner') %>
-	<% end %>
+<%= pluralize(@dcs.count, 'DC')%>;
+<% if @banners %>
+	<%= pluralize(@banners.count, 'Banner') %>
+<% end %>
 
 <article>
 <%-# START table header  -%>
 <table>
 <col width = "250">  
-<col width = "50" >  
-<col width = "60" >
-<col width = "60" > 
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
-<col width = "60" >  
+<col width = "50" >
+<% (1..12).each do |i| %>  
+	<col width = "60" >
+<% end %>
   <tr><th>Distributor/DC</th>
     	<th align="right">rank:</th>
 			<% @ranked_flavors.each do |flavor| %>
@@ -39,11 +30,11 @@
 
 	<%-# START first level outline is distributors   -%>
 	<% @distributors.each do |distributor| %>
-	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= distributor.stocking_dcs_count%> of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
+	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= @dcs.where(distributor: distributor).count %> of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
 
 			<%-# START 2 level outline is DCs   -%>
 				<% @dcs.where(distributor: distributor).each do |dc| %>
-				<tr class="dcrow"><td class="indent1"><%= link_to(dc.dc_name, edit_distributor_dc_path(distributor, dc)) %></td>
+				<tr class="dcrow"><td class="indent1"><%= link_to(dc.dc_name, distributor_dc_path(distributor, dc)) %> <%= number_to_currency(dc.listprice) %> </td>
 
 				<%-# START 3a level outline is DC Slots   -%>
 					<%-# START DC Slots leftmost column   -%>
@@ -68,16 +59,16 @@
 					<%-# START 3b level outline is Banners   -%>
 						<% @banners.where(dc: dc).each do |banner| %>
 						<i>
-						<tr class="bannerrow"><td class="indent2"><%= link_to(banner.banner_name, edit_parent_banner_path(banner.parent,banner)) %> <%= pluralize(banner.banner_store_count, 'Str')%></td>
+						<tr class="bannerrow"><td class="indent2"><%= link_to(banner.banner_name, parent_banner_path(banner.parent,banner)) %> <%= banner.our_banner_store_count %>/<%= pluralize(banner.banner_store_count, 'Str')%> (<%= number_to_percentage(banner.our_store_percent, precision: 0) %>)</td>
 						<th><%= banner.average_bssw.round(1) %></th>
 
 						<%-# START 4 level outline is Authorizations   -%>
 						<% @ranked_flavors.each do |flavor| %>
 							<% if banner.authorizations.includes(:fgsku).pluck(:flavor_id).include? flavor.id %>
 							<% this_auth = banner.authorizations.includes(:fgsku).find_by(:flavor_id)  %>
-	 						<td align="center"><%= banner.auth_flavor_bssw_hash[flavor.shorthand].round(1).to_s %></td>
+	 						<td class = "present"><%= banner.auth_flavor_bssw_hash[flavor.shorthand].round(1).to_s %></td>
 							<% else %>
-								<td bgcolor="white"></td>
+								<td class ="absent"></td>
 							<% end %>
 						<% end %>
 						</tr>

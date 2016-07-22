@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629153902) do
+ActiveRecord::Schema.define(version: 20160705205138) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "banner_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20160629153902) do
     t.integer  "priority"
     t.string   "slug"
     t.integer  "broker_id"
+    t.integer  "our_banner_store_count"
   end
 
   add_index "banners", ["broker_id"], name: "index_banners_on_broker_id"

@@ -32,8 +32,16 @@ class Dc < ActiveRecord::Base
 		self.dc_slots.count
 	end
 
-	# def generate_slug
-	# 	self.slug ||= dc_name.parameterize if dc_name
-	# end
+	def self.dcs_with_banners
+		Dc.joins(:banners).distinct.order("dc_name")
+	end
+
+	def self.dcs_with_current_banners
+		Dc.where(id: Banner.current_banners.select(:dc_id)).order("dc_name")
+	end
+
+	def self.dcs_with_prospect_banners
+		Dc.where(id: Banner.prospect_banners.select(:dc_id)).order("dc_name")
+	end
 
 end

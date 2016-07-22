@@ -29,6 +29,16 @@ td {
     padding: 0 0 0 36px;
 }
 
+.absent { 
+    background-color: white; 
+}
+
+.present { 
+    background-color: Gray;   
+    color: white; 
+    text-align: center;
+}
+
 a {
   text-decoration: underline;
 }

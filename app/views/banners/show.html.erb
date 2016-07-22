@@ -48,7 +48,7 @@
 		<% else %>
 			NO BROKER ASSIGNED
 		<% end %>  </p>
-		<p> Total of <%= pluralize(@banner.banner_store_count, 'store') %></p>
+		<p> We have <%= @banner.our_banner_store_count %> of their <%= pluralize(@banner.banner_store_count, 'store') %> (<%= number_to_percentage(100*@banner.our_banner_store_count.to_f/@banner.banner_store_count.to_f, precision: 0) %>) </p>
 		<p> <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %>, buyer</p>
 		<p> <%= @banner.banner_city %>, <%= @banner.banner_state %> </p>
 		<p>Banner Level Notes:<br/> <%= @banner.banner_notes %> </p>
@@ -94,7 +94,7 @@
 					<td><strong><%= @banner.cume_bssw.round(1) %></strong></td>
 				</tr>
 				<tr align="right">
-					<td>x<%= pluralize(@banner.banner_store_count,"str") %>=Total Bars/Wk</td>
+					<td>x<%= pluralize(@banner.our_banner_store_count,"str") %>=Total Bars/Wk</td>
 					<td><strong><%= @banner.barsperweek %></strong></td>
 				</tr>
 				<tr align="right">

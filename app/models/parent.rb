@@ -46,6 +46,18 @@ class Parent < ActiveRecord::Base
 		slug
 	end
 
+	def banners_count
+		self.banners.count
+	end
+
+	def stocking_banners
+		Parent.joins(:banners.current_banners).order("banner_store_count")
+	end
+
+	def stocking_banners_count
+		self.stocking_banners.count
+	end
+
 	# def generate_slug
 	# 	self.slug ||= corpname.parameterize if corpname
 	# end

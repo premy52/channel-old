@@ -33,9 +33,25 @@ class Distributor < ActiveRecord::Base
 #		Dc.where(id: DcSlot.select(:dc_id)).count
 	end
 
-  def to_param
-		slug
+	def self.distributors_with_current_banners
+		Distributor.where(id: Dc.dcs_with_current_banners.select(:distributor_id)).order("distributor_name")
 	end
+
+	def distributor_current_banner_count
+		distributors_with_current_banners.count
+	end
+
+	def self.distributors_with_prospect_banners
+		Distributor.where(id: Dc.dcs_with_prospect_banners.select(:distributor_id)).order("distributor_name")
+	end
+
+	def distributor_prospect_banner_count
+		distributors_with_prospect_banners.count
+	end
+
+ #  def to_param
+	# 	slug
+	# end
 
 	# def generate_slug
 	# 	self.slug ||= distributor_name.parameterize if distributor_name

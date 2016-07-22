@@ -25,6 +25,7 @@ class Banner < ActiveRecord::Base
 
 	# before_validation :generate_slug
   before_validation :initialize_banner_store_count
+  before_validation :initialize_our_banner_store_count
 
 	def to_param
 		"#{id}-#{banner_name.parameterize}"
@@ -44,6 +45,10 @@ class Banner < ActiveRecord::Base
 
 	def self.priority_banners
 		Banner.where("priority > ?", 0).order("priority")
+	end
+
+	def our_store_percent
+		100 * self.our_banner_store_count.to_f / self.banner_store_count.to_f
 	end
 
 	def noreviewdate
@@ -90,7 +95,11 @@ class Banner < ActiveRecord::Base
 	end
 
 	def barsperweek
-		self.authorizations.inject(0) { |sum, e| sum += e.bssw * self.banner_store_count }.round(2)
+		if self.authorizations.present?
+			self.authorizations.inject(0) { |sum, e| sum += e.bssw * self.our_banner_store_count }.round(2)
+		else
+			0
+		end
 	end
 
 	def to_param
@@ -101,8 +110,11 @@ class Banner < ActiveRecord::Base
 	# 	self.slug = banner_name.parameterize if banner_name
 	# end
 
- def initialize_banner_store_count
+ 	def initialize_banner_store_count
   	self.banner_store_count = 0 unless banner_store_count
+  end
+ def initialize_our_banner_store_count
+  	self.our_banner_store_count = 0 unless our_banner_store_count
   end
  
 end

@@ -55,6 +55,7 @@ private
 							:banner_broker_last_name,
 							:banner_review_date,
 							:banner_store_count,
+							:our_banner_store_count,
 							:banner_notes,
 							:logo_file_name,
 							:country,
