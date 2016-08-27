@@ -1,16 +1,24 @@
 Rails.application.routes.draw do
 
+  root "distributors#index"
+  resource :session
+
+  get "signup" => "users#new"
+  resources :users
+
   resources :logs
   resources :managers
   resources :zing_leads
   resources :brokers
   resources :brokerages
 
-  root "distributors#index"
-  resource :session
-
-  get "signup" => "users#new"
-  resources :users
+  get "distributors/filter/:coverage" => "distributors#index", as: :filtered_distributors
+  resources :distributors do
+    resources :dcs do
+      resources :dc_slots
+      resources :dc_cost_lists
+    end
+  end
 
   resources :flavors do 
     resources :fgskus
@@ -28,15 +36,8 @@ Rails.application.routes.draw do
  	  	resources :stores
 		  resources :banner_promos
       resources :authorizations
+      resources :banner_cost_retails
  	  end
  	end
-  
-  get "distributors/filter/:coverage" => "distributors#index", as: :filtered_distributors
-  
-  resources :distributors do
-	  resources :dcs do
-      resources :dc_slots
-    end
-  end
 
 end

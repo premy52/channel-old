@@ -10,10 +10,11 @@ class Dc < ActiveRecord::Base
 	has_many :banners
 	has_many :logs
 	has_many :dc_slots, dependent: :destroy
+	has_many :dc_dc_cost_lists, dependent: :destroy
 	has_many :slotted_fgskus, through: :dc_slots, source: :fgsku
 
-#	before_validation :generate_slug
-
+	before_validation :initialize_listprice
+	
 #to refactor; also in authorization.rb
 	def available_fgskus
 #		Fgsku.where(country: self.country).order('sizegroup')
@@ -43,5 +44,12 @@ class Dc < ActiveRecord::Base
 	def self.dcs_with_prospect_banners
 		Dc.where(id: Banner.prospect_banners.select(:dc_id)).order("dc_name")
 	end
+
+	def initialize_listprice
+		if self.listprice.blank?
+			self.listprice = ( Fgsku::FULLSIZECADDYPRICE * 100.0 * 4.0 / 3.0).round / 100
+		end
+	end
+
 
 end

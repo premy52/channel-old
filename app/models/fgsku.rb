@@ -5,6 +5,8 @@ class Fgsku < ActiveRecord::Base
 		'Mini Bar'
 	]
 
+	FULLSIZECADDYPRICE = 15.0
+
 	COUNTRIES = [
 		'U.S.',
 		'Canada'

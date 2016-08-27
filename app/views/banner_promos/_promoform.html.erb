@@ -48,12 +48,22 @@
 					<% end %>
 				</td>
 			</tr>
+
+			<tr><td>&nbsp;</td></tr>
+
+			<tr>
+				<td class="required"><%= f.label :bar_feature_price %> <%= f.number_field :bar_feature_price, :class => 'text_field', :step => 0.01 %></td>
+				<td colspan="2" class="required"><%= f.label :performance %><%= f.text_field :performance, size:65, autofocus: true  %></td>
+				<td class="required"><%= f.label :lift %> <%= f.number_field :lift, :class => 'text_field', :step => 0.01 %></td>
+			</tr>
 		</table>
 
 		<p>
 			<%= f.submit %>
-			<%= link_to 'CANCEL', parent_banner_banner_promos_path, class: 'button'%>
+			<%= link_to 'CANCEL', :back, class: 'button'%>
 		</p>
 
 	</fieldset>
 <% end %>
+
+		<%= link_to 'DELETE THIS PROMO', :back, class: 'button'%>

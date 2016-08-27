@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705205138) do
+ActiveRecord::Schema.define(version: 20160728145501) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "banner_id"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20160705205138) do
   add_index "authorizations", ["banner_id"], name: "index_authorizations_on_banner_id"
   add_index "authorizations", ["fgsku_id"], name: "index_authorizations_on_fgsku_id"
 
+  create_table "banner_cost_retails", force: true do |t|
+    t.date     "eff_date"
+    t.decimal  "realcost"
+    t.decimal  "regretail"
+    t.integer  "banner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "banner_cost_retails", ["banner_id"], name: "index_banner_cost_retails_on_banner_id"
+
   create_table "banner_promos", force: true do |t|
     t.date     "start_date"
     t.date     "end_date"
@@ -37,6 +48,9 @@ ActiveRecord::Schema.define(version: 20160705205138) do
     t.integer  "banner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "bar_feature_price"
+    t.string   "performance"
+    t.decimal  "lift"
   end
 
   add_index "banner_promos", ["banner_id"], name: "index_banner_promos_on_banner_id"
@@ -62,6 +76,8 @@ ActiveRecord::Schema.define(version: 20160705205138) do
     t.string   "slug"
     t.integer  "broker_id"
     t.integer  "our_banner_store_count"
+    t.decimal  "bar_regular_retail"
+    t.decimal  "caddy_actual_cost"
   end
 
   add_index "banners", ["broker_id"], name: "index_banners_on_broker_id"
@@ -99,6 +115,17 @@ ActiveRecord::Schema.define(version: 20160705205138) do
   end
 
   add_index "brokers", ["brokerage_id"], name: "index_brokers_on_brokerage_id"
+
+  create_table "dc_cost_lists", force: true do |t|
+    t.date     "eff_date"
+    t.decimal  "receivedcost"
+    t.decimal  "listprice"
+    t.integer  "dc_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dc_cost_lists", ["dc_id"], name: "index_dc_cost_lists_on_dc_id"
 
   create_table "dc_slots", force: true do |t|
     t.integer  "dc_id"

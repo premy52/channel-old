@@ -30,7 +30,7 @@
 
 	<%-# START first level outline is distributors   -%>
 	<% @distributors.each do |distributor| %>
-	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= @dcs.where(distributor: distributor).count %> of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
+	<strong><tr class="distributorrow"><td><%= link_to(distributor.distributor_name, distributor) %> <%= distributor.stocking_dcs_count %> of <%= pluralize(distributor.dc_count, 'DC') %></td></tr></strong>
 
 			<%-# START 2 level outline is DCs   -%>
 				<% @dcs.where(distributor: distributor).each do |dc| %>
@@ -62,7 +62,7 @@
 						<tr class="bannerrow"><td class="indent2"><%= link_to(banner.banner_name, parent_banner_path(banner.parent,banner)) %> <%= banner.our_banner_store_count %>/<%= pluralize(banner.banner_store_count, 'Str')%> (<%= number_to_percentage(banner.our_store_percent, precision: 0) %>)</td>
 						<th><%= banner.average_bssw.round(1) %></th>
 
-						<%-# START 4 level outline is Authorizations   -%>
+						<%# START 4 level outline is Authorizations   %>
 						<% @ranked_flavors.each do |flavor| %>
 							<% if banner.authorizations.includes(:fgsku).pluck(:flavor_id).include? flavor.id %>
 							<% this_auth = banner.authorizations.includes(:fgsku).find_by(:flavor_id)  %>

@@ -1,0 +1,68 @@
+h = {}
+h.merge!(key: "bar")
+# => {:key=>"bar"}
+
+http://ruby-doc.org/core-2.3.1/Hash.html#method-i-merge 
+
+{
+	2016 =>{
+					year_total => 			{
+																formula_spend_dollars => 999.99,
+																lump_spend_dollars => 999.99,
+																formula_spend_percent => 999.99,
+																lump_spend_percent => 999.99,
+																percent_of_units_on_promo => 999.99
+															}
+
+					quarterly_totals =>	{ 
+																1 =>  { 
+																				formula_spend_dollars => 999.99,
+																				lump_spend_dollars => 999.99,
+																				formula_spend_percent => 999.99,
+																				lump_spend_percent => 999.99,
+																				percent_of_units_on_promo => 999.99
+																				}
+																.
+																.
+																.																			
+																n =>  { 
+																				formula_spend_dollars => 999.99,
+																				lump_spend_dollars => 999.99,
+																				formula_spend_percent => 999.99,
+																				lump_spend_percent => 999.99,
+																				percent_of_units_on_promo => 999.99
+																			}
+
+															}
+
+					promos =>						[ 
+																{	promo_descriptor => banner_promo.comment,
+																	vehicle => banner_promo.promo_vehicle,
+																	method => banner_promo.promo_method,
+																	basis => banner_promo.basis,
+																	dollars_per_bar => banner_promo.dollars_per_bar,
+																	percent_of_list => banner_promo.percent_of_list,
+																	feature_price => banner_promo.feature_price,
+																	.
+																	.
+																	.
+																	promo_weeks => [3,4,5,6]
+																},
+																{
+
+																}
+																.
+																.
+																.
+																{
+
+																}
+															]
+					},
+
+	2017 => { . . . . . 
+
+
+					}
+
+}

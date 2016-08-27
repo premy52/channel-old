@@ -12,11 +12,13 @@ class BannerPromosController < ApplicationController
 	end
 
 	def edit
+    session[:return_to] ||= request.referer # HERE!
 	end
 
 	def update
 		if @banner_promo.update(promo_params)
-			redirect_to parent_banner_banner_promos_path, notice: "Promo updated"
+			# HERE! redirect_to parent_banners_path, notice: "Promo updated"
+			redirect_to session.delete(:return_to), notice: "Promo updated"
 		else
 			render :edit
 		end
@@ -53,7 +55,10 @@ private
 			   	:promo_level, 
 			   	:status, 
 			   	:comment, 
-			   	:banner_id
+			   	:banner_id,
+			   	:bar_feature_price,
+			   	:performance,
+			   	:lift
 					)
 	end
 

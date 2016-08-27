@@ -6,6 +6,7 @@ class Parent < ActiveRecord::Base
 	CHANNELS = [ 
 		'Natural Grocery',
 		'Conventional Grocery',
+		'Drug',
 		'Supplement',
 		'Mass Merchandise',
 		'Foodservice',

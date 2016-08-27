@@ -1,0 +1,2 @@
+class BannerCostRetailsController < ApplicationController
+end

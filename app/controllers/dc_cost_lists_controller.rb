@@ -1,0 +1,2 @@
+class DcCostListsController < ApplicationController
+end

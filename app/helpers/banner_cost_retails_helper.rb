@@ -1,0 +1,2 @@
+module BannerCostRetailsHelper
+end

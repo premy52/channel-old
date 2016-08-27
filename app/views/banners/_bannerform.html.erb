@@ -24,34 +24,25 @@
 					<% end %>
 				</td>
 
-				<td class="required"> <%= f.label "Banner Broker:" %>
-					<% Brokerage.all.order("company").each do |brokerage| %>
-						<b><i>
-						<% if @banner.broker && @banner.broker.brokerage_id == brokerage.id %>
-								<strong><font color="red"> <%= brokerage.company %>:</br></font></strong>
-							<% else %>
-								<%= brokerage.company %>:</br>
-						<% end %>
-						</i></b>
+			</tr>
 
-						<% Broker.where(brokerage_id: brokerage.id).order("last_name").each do |broker| %>
-							<%= f.radio_button :broker_id, broker.id  %>
-								<% if @banner.broker_id == broker.id %>
-									<strong><font color="red"> <%= broker.first_name %> <%= broker.last_name %></br></font></strong>
-								<% else %>
-									<%= broker.first_name %> <%= broker.last_name %></br>
-								<% end %>
-							<% end %>
+			<tr><td>&nbsp;</td></tr>
 
+			<tr>
+				<td class="required"><%= f.label :bar_regular_retail %> <%= f.number_field :bar_regular_retail, :class => 'text_field', :step => 0.01 %></td>
+				<td class="required"><%= f.label :caddy_actual_cost %> <%= f.number_field :caddy_actual_cost, :class => 'text_field', :step => 0.01 %></td>
+					<td colspan = "2" class="required">
+						<% unless @banner.dc.nil? %>
+							Caddy List Cost from <%= @banner.dc.distributor.distributor_name %> <%= @banner.dc.dc_name %>: <%= number_to_currency(@banner.dc.listprice) %>
 						<% end %>
-				</td>
+					</td>
 			</tr>
 
 			<tr><td>&nbsp;</td></tr>
 
 			<tr>
 				<td class="required"><%= f.label :banner_store_count %> <%= f.number_field :banner_store_count %></td>
-				<td class="required"><%= f.label :our_banner_store_count %> <%= f.number_field :our_banner_store_count %></td>
+				<td class="required"><%= f.label :our_banner_store_count %> <%= f.number_field :our_banner_store_count %></td>				
 				<td class="required"><%= f.label :banner_review_date %> <%= f.date_field :banner_review_date %></td>
 				<td class="required"><%= f.label :banner_city %><%= f.text_field :banner_city%></td>
 				<td class="required"><%= f.label :banner_state %><%= f.text_field :banner_state%></td>
@@ -97,21 +88,50 @@
 							<% linecount = 0 %>
 						<% end %>
 					<% end %>
-
 				</td>
-		</td>
+			</td>
 
 			<td>
 				<strong><%= f.label 'Authorizations:' %></strong>
 				<%= f.collection_check_boxes(:authorized_fgsku_ids, @banner.available_fgskus, :id, :flavor_descriptor) %>
 			</td>
+
+				<td class="required"> <%= f.label "Banner Broker:" %>
+					<% linecount = 0 %>
+					<% Brokerage.all.order("company").each do |brokerage| %>
+						<b><i>
+							<% if @banner.broker && @banner.broker.brokerage_id == brokerage.id %>
+									<strong><font color="red"> <%= brokerage.company %>:</br></font></strong>
+								<% else %>
+									<%= brokerage.company %>:</br>
+							<% end %>
+							<% linecount += 1 %>
+						</i></b>
+
+						<% Broker.where(brokerage_id: brokerage.id).order("last_name").each do |broker| %>
+							<%= f.radio_button :broker_id, broker.id  %>
+								<% if @banner.broker_id == broker.id %>
+									<strong><font color="red"> <%= broker.first_name %> <%= broker.last_name %></br></font></strong>
+								<% else %>
+									<%= broker.first_name %> <%= broker.last_name %></br>
+								<% end %>
+							<% linecount += 1 %>
+							<% end %>
+
+							<% if linecount >= breakline %>
+								</td><td>
+								<% linecount = 0 %>
+							<% end %>
+						<% end %>
+				</td>
+
 		</tr>
 
 		</table>
 
 		<p>
 			<%= f.submit %>
-			<%= link_to 'CANCEL', parent_banners_path, class: 'button'%>
+			<%= link_to 'CANCEL', :back, class: 'button'%>
 		</p>
 
 	</fieldset>

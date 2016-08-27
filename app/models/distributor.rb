@@ -22,7 +22,8 @@ class Distributor < ActiveRecord::Base
 	has_many :logs
 	has_many :dcs, dependent: :destroy
 
-#	before_validation :generate_slug	
+	scope :distributors_with_current_banners, -> { Distributor.where(id: Dc.dcs_with_current_banners.select(:distributor_id)).order("distributor_name") }
+	scope :distributors_with_prospect_banners, -> { Distributor.where(id: Dc.dcs_with_prospect_banners.select(:distributor_id)).order("distributor_name") }
 
 	def dc_count
 		self.dcs.count
@@ -30,31 +31,14 @@ class Distributor < ActiveRecord::Base
 
 	def stocking_dcs_count
 		self.dcs.where(id: DcSlot.select(:dc_id)).count
-#		Dc.where(id: DcSlot.select(:dc_id)).count
-	end
-
-	def self.distributors_with_current_banners
-		Distributor.where(id: Dc.dcs_with_current_banners.select(:distributor_id)).order("distributor_name")
 	end
 
 	def distributor_current_banner_count
 		distributors_with_current_banners.count
 	end
 
-	def self.distributors_with_prospect_banners
-		Distributor.where(id: Dc.dcs_with_prospect_banners.select(:distributor_id)).order("distributor_name")
-	end
-
 	def distributor_prospect_banner_count
 		distributors_with_prospect_banners.count
 	end
-
- #  def to_param
-	# 	slug
-	# end
-
-	# def generate_slug
-	# 	self.slug ||= distributor_name.parameterize if distributor_name
-	# end
 
 end

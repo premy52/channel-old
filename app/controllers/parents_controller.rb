@@ -6,7 +6,7 @@ class ParentsController < ApplicationController
 
 	def index
 #		@parents = Parent.all.order('channel_segment desc')
-		@parents = Parent.all.order('channel_segment desc')
+		@parents = Parent.all.order('corpname')
 		@banners = Banner.all
 		@banner_promos = BannerPromo.all
 	end

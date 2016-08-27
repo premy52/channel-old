@@ -39,6 +39,30 @@ td {
     text-align: center;
 }
 
+.plan { 
+    background-color: Yellow;  
+}
+
+.currentweek {
+    background-color: Black;
+}
+
+.presented { 
+    background-color: Orange;  
+}
+
+.approved { 
+    background-color: Green;  
+}
+
+.rejected { 
+    background-color: Black;  
+}
+
+.executed { 
+    background-color: Blue;  
+}
+
 a {
   text-decoration: underline;
 }
@@ -69,7 +93,7 @@ a:active {
 
 .bannerrow {
   background-color: white;
-  font-size: small;
+  font-size: 80%;
   font-style: italic;
 }
 

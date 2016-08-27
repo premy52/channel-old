@@ -1,35 +1,49 @@
 <% content_for(:title, @banner.banner_name) %>
 <article id="parent" class="parent">
 	<header>
-		Parent: <%= image_for(@banner) %>
-		<% parent = @banner.parent %>
-		<%= link_to(parent.corpname, parent_path(parent)) %> 
+		Parent: <% parent = @banner.parent %> <%= link_to(parent.corpname, parent_path(parent)) %> 
+		<%= image_for(@banner) %>
 		<h1>Banner: <%= @banner.banner_name %></h1>
 	</header>
-	Priority: <%= @banner.priority %><br>
+	<%= @banner.banner_city %>, <%= @banner.banner_state %> <br/>
+	 We have <%= @banner.our_banner_store_count %> of their <%= pluralize(@banner.banner_store_count, 'store') %> (<%= number_to_percentage(100*@banner.our_banner_store_count.to_f/@banner.banner_store_count.to_f, precision: 0) %>) <br/>
+	Annualized Gross $ to Zing: <%= number_to_currency(@banner.annual_gross, precision: 0) %><br/>
+	Priority: <%= @banner.priority %><br/>
+	Default Regular Shelf Price Per Bar: <%= number_to_currency(@banner.bar_regular_retail) %><br/>
+	Default DC: <%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc)) %><br/>
 
-	Default DC: <%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc)) %><br>
+	DC List Price: <%= number_to_currency(@banner.dc.listprice) %>/Caddy; <%= number_to_currency(@banner.dc.listprice / 12, precision: 2) %>/bar<br/>
 
+	Actual Cost: <%= number_to_currency(@banner.caddy_actual_cost) %>/Caddy; <%= number_to_currency(@banner.caddy_actual_cost / 12, precision: 2) %>/bar<br/>
+
+
+	NOMINAL Retail Margin Based on List Price: <%= number_to_percentage(@banner.nominal_retail_margin_pct * 100, precision: 2) %>; <%= number_to_currency(@banner.nominal_retail_margin_dollars) %>/bar<br/>
+	Actual Retail Margin Based on Actual Cost: <%= number_to_percentage(@banner.actual_retail_margin_pct * 100, precision: 2) %>; <%= number_to_currency(@banner.actual_retail_margin_dollars) %>/bar<br/>
+	Broker: 
+	<% if @banner.broker %>
+		<%= @banner.broker.first_name %> <%= @banner.broker.last_name %>, <%= @banner.broker.brokerage.company %>; 
+	Brokerage Rate <%= number_to_percentage(@banner.broker.brokerage.rate, precision: 1) %> ==>
+	<%= number_to_currency(@banner.annual_brokerage, precision: 0) %> annual brokerage<br/>
+	<% else %>
+		NO BROKER ASSIGNED
+	<% end %>  <br/>
+	Buyer: <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %><br/>
+	Banner Level Notes:<br/> <%= @banner.banner_notes %> <br/>
+
+<hr>
 	<h2><%= pluralize(@banner.banner_promos.size, 'Promo') %>:</h2>
-		<ol>
+		
+		<%= render 'promoflowchartheader' %>
 		<% @banner.banner_promos.order("start_date").each do |promo| %>
-		<article class="parent">
-			<header>
-				<li>
-					<strong><%= link_to(promo.comment, parent_banner_banner_promo_path(@banner.parent, @banner, promo )) %> </strong>
-					 <%= promo.start_date %> to <%= promo.end_date %> 
-					 <%= promo.promo_vehicle %> <%= promo.promo_level %> <%= promo.promo_method %> <%= promo.status %> 
-				</li>
+			<%= render 'promoflowchart', :promo => promo %>
 			<% end %>
-		</ol>
+
  	<%= link_to "Add a Promo", new_parent_banner_banner_promo_path(@parent,@banner),
   								class: "button ok addbanner" %>
 
 	<h2><%= pluralize(@banner.stores.size, 'Store') %>:</h2>
 		<ol>
 		<% @banner.stores.order("store_name").each do |store| %>
-		<article class="parent">
-			<header>
 				<li>
 					<strong>
 						<%= link_to(store.store_name, parent_banner_store_path(@banner.parent, @banner, store )) %> 
@@ -41,17 +55,6 @@
 		</ol>
   	<%= link_to "Add a Store", new_parent_banner_store_path(@parent,@banner),
   								class: "button ok addbanner" %>
-
-		<p> Broker: 
-		<% if @banner.broker %>
-			<%= @banner.broker.first_name %> <%= @banner.broker.last_name %>, <%= @banner.broker.brokerage.company %>
-		<% else %>
-			NO BROKER ASSIGNED
-		<% end %>  </p>
-		<p> We have <%= @banner.our_banner_store_count %> of their <%= pluralize(@banner.banner_store_count, 'store') %> (<%= number_to_percentage(100*@banner.our_banner_store_count.to_f/@banner.banner_store_count.to_f, precision: 0) %>) </p>
-		<p> <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %>, buyer</p>
-		<p> <%= @banner.banner_city %>, <%= @banner.banner_state %> </p>
-		<p>Banner Level Notes:<br/> <%= @banner.banner_notes %> </p>
  
   <footer>
   	<% if current_user_admin? %>

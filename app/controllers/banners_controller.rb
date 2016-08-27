@@ -63,6 +63,10 @@ private
 							:priority,
 							:slug,
 							:broker_id,
+							:bar_regular_retail,
+							:caddy_actual_cost,
+							:bar_feature_price,
+							:performance,
 							authorized_fgsku_ids: []
 							)
 	end

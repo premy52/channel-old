@@ -1,5 +1,19 @@
 @import "colors";
 
+a.scarybutton {
+  display: inline-block;
+  border: 1px $subdued-color solid;
+  border-radius: 4px;
+  padding: 4px 6px;
+  text-decoration: none;
+  &:hover {
+    background-color: $subdued-color;
+    text-shadow: 0;
+    text-decoration: underline;
+	}
+}
+
+
 a.button {
   display: inline-block;
   border: 1px $subdued-color solid;

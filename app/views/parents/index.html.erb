@@ -1,44 +1,14 @@
 
-<h1><%= pluralize(@parents.size, 'Parent Organization')%> </h1>
-
-<table>
-<col width = "200">  
-<col width = "50" >
-<% (1..12).each do |i| %>  
-	<col width = "12" >
-<% end %>
-<tr class="bannerrow">
-	<td>left box </td>
-	<td>2nd box </td>
-	<% (1..1).each do |i| %>  
-	<td colspan="52" align="center">2016</td>
-	<% end %>
-</tr>
-<tr class="bannerrow">
-	<td>left box </td>
-	<td>2nd box </td>
-	<% (1..4).each do |i| %>  
-	<td colspan="13" align="center"><%= i %>Q</td>
-	<% end %>
-</tr>
-<tr class="bannerrow">
-	<td>left box </td>
-	<td>2nd box </td>
-	<% (1..52).each do |i| %>  
-	<td><%= i %></td>
-	<% end %>
-</tr>
-</table>
+<h1><%= pluralize(@parents.size, 'Parent Company')%> </h1>
 
 	<% @parents.each do |parent| %>
-		[<%= parent.channel_segment[0,1] %>] 
 		<strong><%= link_to(parent.corpname, parent) %></strong> | 
 		<%= pluralize(parent.banners_count, 'banner') %> </br>
 
+		<ul>
 			<% parent.banners.each do |banner| %>
-				
-					<%= link_to(banner.banner_name, parent_banner_path(parent,banner)) %>
-				</br>	
-			<% end %>		
+				<li><%= link_to(banner.banner_name, parent_banner_path(parent,banner)) %></li>	
+			<% end %>
+		</ul>		
 
 	<% end %>

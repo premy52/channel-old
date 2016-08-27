@@ -1,0 +1,38 @@
+<%= render 'promotablelayout' %>
+
+	<%# START banner_promos     %>
+	<tr class="bannerrow">
+		<td><%= link_to(promo.comment, edit_parent_banner_banner_promo_path(@banner.parent, @banner, promo )) %></td>
+		<td align="center"><%= promo.promo_vehicle %> </td>
+		<td align="center"><%= promo.promo_method %> </td>
+
+		<td align="center">
+			<%= banner_promo_basis_text(promo.promo_vehicle, promo.promo_method, promo.promo_level)%> 
+		</td>
+		
+		<td align="center"><%= number_to_currency(promo.dollars_per_bar) %> </td>
+		<td align="center">
+			<%= number_to_percentage(promo.percent_of_list * 100, precision: 1) %> 
+		</td>
+		<td align="center"><%= number_to_currency(promo.bar_feature_price) %></td>
+
+		<td align="center"><%= number_to_currency(promo.promo_margin_dollars) %></td>
+		<td align="center"><%= number_to_percentage(promo.promo_margin_pct * 100, precision: 1) if promo.promo_margin_pct%></td>
+
+		<td align="center">
+			<% if promo.lift.present? && promo.lift != 0 %>
+				<%= number_to_percentage(promo.lift*100, precision: 0)  %>
+			<% end %>
+		</td>
+
+		<% (1..52).each do |i| %>  
+			<% if (promo.startweek..promo.endweek).include?(i) %>
+				<td class = "<%= promo.status.downcase %>" ></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		<% end %>
+
+
+	</tr>
+</table>

@@ -1,0 +1,53 @@
+  <%= render 'promotablelayout' %>
+	<% leftcolumncount = 8 %>
+
+	<tr class="bannerrow" align="center">
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>% of</td>
+		<td colspan="3">Feature</td>
+		<td></td>
+		<td colspan="52">2016</td>
+	</tr>
+
+	<tr class="bannerrow" align="center">
+		<td>Promo Description</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>$/</td>
+		<td>Zing</td>
+		<td>Shelf</td>
+		<td colspan="2">Retail Mgn</td>
+		<td>%</td>
+		
+		<% (1..4).each do |i| %>  
+			<td colspan="13" align="center"><%= i %>Q</td>
+		<% end %>
+	</tr>
+	
+	<tr class="bannerrow" align="center">
+		<td>(click to edit)</td>
+		<td>Vehicle</td>
+		<td>Method</td>
+		<td>Basis</td>
+		<td>Bar</td>
+		<td>List</td>
+		<td>Price</td>
+		<td>$</td>
+		<td>%</td>
+		<td>Lift</td>
+
+		<% (1..52).each do |i| %>
+			<% if (Date.today.strftime("%W").to_i >= i) %>
+				<td class = "currentweek" ></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		<% end %>
+	</tr>
+
+</table>
