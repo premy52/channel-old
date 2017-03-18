@@ -1,22 +1,37 @@
 <article id="parent" class="parent">
 	<header>
-	<%= @flavor.descriptor %>
-	<%= @fgsku.id %> 
-		<%= link_to(@flavor.descriptor, flavor_fgsku_path(@flavor, @fgsku)) %> <h1><%= @fgsku.id %> Oz.</h1>
+		<h1><%= @fgsku.weightoz %> Oz. <%= link_to(@flavor.descriptor, flavor_fgsku_path(@flavor, @fgsku)) %></h1>
 	</header>
 
+<table cellpadding="10">
+	<tr>
+	<td valign = "top">
+	<p><%= pluralize(@fgsku.slotting_dcs.size, 'Slotting DC') %>:</p>
+		<ol>
+		<% @fgsku.slotting_dcs.each do |slotting_dc| %>
+		<article class="parent">
+				<li><%= link_to(
+					 "#{slotting_dc.dc_name}", distributor_dc_path(slotting_dc.distributor, slotting_dc)) %>
+					 (<%= slotting_dc.distributor.distributor_name %>)
+				</li>
+			<% end %>
+		</ol>
+  </td>
+  <td valign = "top">
 	<p><%= pluralize(@fgsku.authorizing_banners.size, 'Authorizing Banner') %>:</p>
 		<ol>
 		<% @fgsku.authorizing_banners.each do |authorizing_banner| %>
 		<article class="parent">
-			<header>
 				<li><%= link_to(
 					 "#{authorizing_banner.banner_name}", parent_banner_path(authorizing_banner.parent, authorizing_banner)) %>
 					 (<%= authorizing_banner.parent.corpname %>)
 				</li>
 			<% end %>
 		</ol>
-  
+  </td>
+  </tr>
+  </table>
+
   <footer>
   	<% if current_user_admin? %>
 	    <nav>

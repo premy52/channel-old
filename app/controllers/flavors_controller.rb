@@ -9,7 +9,9 @@ class FlavorsController < ApplicationController
 	end
 
 	def show
-	end
+		@flavor = Flavor.find_by!(slug: params[:id])
+end
+
 	def edit
 	end
 	def update
@@ -50,6 +52,11 @@ private
 									)
 	end
 	def set_flavor
-#		parameter = :flavor_id || :id
-		@flavor = Flavor.find_by!(slug: params[:id])
+		if @flavor
+			@flavor = Flavor.find_by!(slug: params[:id])
+		elsif params[:flavor_id].present?
+			@flavor = Flavor.find_by!(slug: params[:flavor_id])
+		else
+			@flavor = Flavor.find_by!(slug: params[:id])
+		end
 	end

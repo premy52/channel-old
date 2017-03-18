@@ -1,0 +1,116 @@
+<table>
+	<col width = "140"> 
+	<col width = "50" >
+	<col width = "50" >
+	<col width = "70" >
+	<col width = "70" >
+	<col width = "70" >
+	<col width = "50" >
+
+	<tr class="bannerrow" align="center">
+		<td></td>
+		<td colspan="2">Proforma</td>
+		<td colspan="4">Annual</td>
+	</tr>
+
+	<tr class="bannerrow" align="center">
+		<td align="left"><em><b>Our Economics</b></em></td>
+		<td>Bar</td>
+		<td>Caddy</td>
+		<td>Base</td>
+		<td>Lift</td>
+		<td>Total</td>
+		<td>%Gross</td>
+	</tr>
+	
+	<tr class="bannerrow" align="right">
+		<td>Masters</td>
+		<td></td>
+		<td></td>
+		<td>*test1*</td>
+		<td>*test2*</td>
+		<td>*test3*</td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Gross</td>
+		<td><%= number_to_currency(Fgsku::FULLSIZEBARPRICE, precision: 2) %></td>
+		<td><%= number_to_currency(Fgsku::FULLSIZECADDYPRICE, precision: 2) %></td>
+		<td><%= number_to_currency(@banner.annual_gross_base, precision: 0) %></td>
+		<td><%= number_to_currency(@banner.year_gross_lift(2016), precision: 0) %></td>
+		<td><%= number_to_currency(@banner.annual_gross_total(2016), precision: 0) %></td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>%Lift</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_percentage(100* @banner.annual_gross_lift_percent(2016), precision: 1) %></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Variable Cost Base</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>VC Pre-Promo</td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(@banner.annual_vc_base, precision: 0) %></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_percentage(100*@banner.annual_vc_base_percent, precision: 1) %></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Formula Promo</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(-@banner.banner_year_formula_spend(2016), precision: 0) %></td>
+		<td></td>
+		<td>-<%= number_to_percentage(100*@banner.banner_year_formula_spend_percent(2016), precision: 1) %></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Lump Promo</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(-@banner.banner_year_lump_spend(2016), precision: 0) %></td>
+		<td></td>
+		<td>-<%= number_to_percentage(100*@banner.banner_year_lump_spend_percent(2016), precision: 1) %></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Total Promo</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(-@banner.banner_year_promo_spend(2016), precision: 0) %></td>
+		<td></td>
+		<td>-<%= number_to_percentage(100*@banner.banner_year_promo_spend_percent(2016), precision: 1) %></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>VC Post-Promo</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(@banner.annual_vc_post_promo(2016), precision: 0) %></td>
+		<td></td>
+		<td><%= number_to_percentage(100*@banner.annual_vc_post_promo_percent(2016), precision: 1) %></td>
+	</tr>
+
+</table>

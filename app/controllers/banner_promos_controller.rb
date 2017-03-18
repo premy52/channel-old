@@ -40,7 +40,7 @@ class BannerPromosController < ApplicationController
 	def destroy
 		deleted = @banner_promo.comment
 		@banner_promo.destroy
-		redirect_to parent_banner_stores_path, notice: "#{deleted} promotion deleted"
+		redirect_to parent_banner_path(@banner.parent, @banner), notice: "#{deleted} promotion deleted"
 	end
 
 end

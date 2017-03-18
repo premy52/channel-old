@@ -1,0 +1,45 @@
+<table>
+	<col width = "140"> 
+	<col width = "50" >
+	<col width = "50" >
+	<col width = "50" >
+	<col width = "50" >
+	<col width = "50" >
+
+	<tr class="bannerrow" align="center">
+		<td align="left"><em><b>Channel Economics</b></em></td>
+		<td>Bar</td>
+		<td>Caddy</td>
+		<td>$Mgn</td>
+		<td>MkUp%</td>
+		<td>Mgn%</td>
+	</tr>
+	
+	<tr class="bannerrow" align="right">
+		<td><%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc))%> List Cost</td>
+		<td><%= number_to_currency(@banner.dc.listprice / 12, precision: 2) %></td>
+		<td><%= number_to_currency(@banner.dc.listprice) %></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>DC Actual Cost</td>
+		<td><%= number_to_currency(@banner.caddy_actual_cost / 12, precision: 2) %></td>
+		<td><%= number_to_currency(@banner.caddy_actual_cost, precision: 2) %></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="bannerrow" align="right">
+		<td>Retail</td>
+		<td><%= number_to_currency(@banner.bar_regular_retail) %></td>
+		<td></td>
+		<td><%= number_to_currency(@banner.actual_retail_margin_dollars) %></td>
+		<td></td>
+		<td><%= number_to_percentage(@banner.actual_retail_margin_pct * 100, precision: 2) %></td>
+	</tr>
+
+</table>

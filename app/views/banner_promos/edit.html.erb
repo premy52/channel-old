@@ -5,6 +5,8 @@
 	in <%= link_to(@banner.banner_name, @parent ) %> 
 
 	<%= render 'promoform' %>
-
+	<div align= "center" >
+		<%= link_to 'DELETE THIS PROMO', parent_banner_banner_promo_path(@banner.parent, @banner, @banner_promo), class: 'scarybutton', method: :delete, data: {confirm: "Are you sure you want to delete #{@banner_promo.comment}?"} %>
+	</div>
 	</header>
 </article>

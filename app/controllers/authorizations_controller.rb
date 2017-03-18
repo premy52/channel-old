@@ -22,13 +22,15 @@ class AuthorizationsController < ApplicationController
 	end
 
 	def edit
+ #   session[:return_to] ||= request.referer
 	end
 
 	def update
 		@authorization = @banner.authorizations.find(params[:id])
 		if @authorization.update(authorization_params)
 #			redirect_to :back
-			redirect_to parent_banner_path(@parent, @banner), notice: "authorization successfully updated"			
+#			redirect_to session.delete(:return_to), notice: "authorization updated"
+			redirect_to parent_banner_path(@parent, @banner), notice: "authorization updated"
 		else
 			render :edit
 		end
@@ -60,8 +62,10 @@ private
 	def set_parent
 		if @banner
 			@parent = @banner.parent
-		else
+		elsif params[:parent_id].present?
 			@parent = Parent.find_by!(slug: params[:parent_id])
+		else 
+			@parent = Parent.find_by!(slug: params[:id])
 		end
 	end
 

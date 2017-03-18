@@ -1,24 +1,14 @@
 <% content_for(:title, @banner.banner_name) %>
 <article id="parent" class="parent">
 	<header>
-		Parent: <% parent = @banner.parent %> <%= link_to(parent.corpname, parent_path(parent)) %> 
+		Parent: <% parent = @banner.parent %> <%= link_to(parent.corpname, parent_path(parent)) %> <br />
+		DC: <%= link_to(@banner.dc.distributor.distributor_name, distributor_path(@banner.dc.distributor)) %> <%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc)) %>
 		<%= image_for(@banner) %>
 		<h1>Banner: <%= @banner.banner_name %></h1>
 	</header>
-	<%= @banner.banner_city %>, <%= @banner.banner_state %> <br/>
 	 We have <%= @banner.our_banner_store_count %> of their <%= pluralize(@banner.banner_store_count, 'store') %> (<%= number_to_percentage(100*@banner.our_banner_store_count.to_f/@banner.banner_store_count.to_f, precision: 0) %>) <br/>
-	Annualized Gross $ to Zing: <%= number_to_currency(@banner.annual_gross, precision: 0) %><br/>
+
 	Priority: <%= @banner.priority %><br/>
-	Default Regular Shelf Price Per Bar: <%= number_to_currency(@banner.bar_regular_retail) %><br/>
-	Default DC: <%= link_to(@banner.dc.dc_name, distributor_dc_path(@banner.dc.distributor, @banner.dc)) %><br/>
-
-	DC List Price: <%= number_to_currency(@banner.dc.listprice) %>/Caddy; <%= number_to_currency(@banner.dc.listprice / 12, precision: 2) %>/bar<br/>
-
-	Actual Cost: <%= number_to_currency(@banner.caddy_actual_cost) %>/Caddy; <%= number_to_currency(@banner.caddy_actual_cost / 12, precision: 2) %>/bar<br/>
-
-
-	NOMINAL Retail Margin Based on List Price: <%= number_to_percentage(@banner.nominal_retail_margin_pct * 100, precision: 2) %>; <%= number_to_currency(@banner.nominal_retail_margin_dollars) %>/bar<br/>
-	Actual Retail Margin Based on Actual Cost: <%= number_to_percentage(@banner.actual_retail_margin_pct * 100, precision: 2) %>; <%= number_to_currency(@banner.actual_retail_margin_dollars) %>/bar<br/>
 	Broker: 
 	<% if @banner.broker %>
 		<%= @banner.broker.first_name %> <%= @banner.broker.last_name %>, <%= @banner.broker.brokerage.company %>; 
@@ -27,11 +17,19 @@
 	<% else %>
 		NO BROKER ASSIGNED
 	<% end %>  <br/>
+	<%= @banner.banner_city %>, <%= @banner.banner_state %> <br/>
 	Buyer: <%= @banner.banner_buyer_first_name %> <%= @banner.banner_buyer_last_name %><br/>
 	Banner Level Notes:<br/> <%= @banner.banner_notes %> <br/>
 
-<hr>
-	<h2><%= pluralize(@banner.banner_promos.size, 'Promo') %>:</h2>
+	<%= render 'channeleconomicstable' %><br>
+
+	<%= render 'oureconomicstable' %><br>
+
+	<h2><%= pluralize(@banner.banner_promos.size, 'Promo') %>: 
+	<%= number_to_percentage(100*@banner.banner_year_formula_spend_percent(2016), precision: 1) %> Formula Spend | 
+	<%= number_to_percentage(100*@banner.banner_year_lump_spend_percent(2016), precision: 1) %> Lump Spend | 
+	<%= number_to_percentage(100*@banner.banner_year_promo_spend_percent(2016), precision: 1) %> Total Spend
+	</h2>	
 		
 		<%= render 'promoflowchartheader' %>
 		<% @banner.banner_promos.order("start_date").each do |promo| %>
@@ -98,7 +96,7 @@
 				</tr>
 				<tr align="right">
 					<td>x<%= pluralize(@banner.our_banner_store_count,"str") %>=Total Bars/Wk</td>
-					<td><strong><%= @banner.barsperweek %></strong></td>
+					<td><strong><%= @banner.barsperweekbase %></strong></td>
 				</tr>
 				<tr align="right">
 					<td>Average BSSW </td>
